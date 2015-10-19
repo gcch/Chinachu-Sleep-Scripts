@@ -84,13 +84,13 @@ pm-utils のインストール
 
 SSH 経由の sudo だと、PATH が引き継がれず、Python 3.x をインストールしていても、「そんなのない！」と言われる場合があります。
 
-        $ sudo ./setup.sh < settings.sample
-        please install python 3.x.
+    $ sudo ./setup.sh < settings.sample
+    please install python 3.x.
 
 その時には、下記のように実行してみてください。
 
-        $ export PATH=$PATH
-        $ sudo PATH=$PATH ./setup.sh < settings.sample
+    $ export PATH=$PATH
+    $ sudo PATH=$PATH ./setup.sh < settings.sample
 
 ## References
 参考にさせて頂いたサイト。
