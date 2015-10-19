@@ -1,0 +1,6 @@
+0				# Power manager (0: pm-utils / 1: systemd)
+http://localhost:10772		# Chinachu URL
+600                             # Room between the next wake up and the next recording [sec.]
+600				# Period to not go into sleep after starting up [sec.]
+1800				# Period to not go into sleep before the next recording [sec.]
+5				# Period of running the cron [min.]
