@@ -23,13 +23,13 @@ else
 	
 	# It falls into the below situation even though Python 3.x has already been installed,
 	#
-	#     $ sudo ./setup.sh < settings.sample
+	#     $ sudo ./install.sh < settings
 	#     please install python 3.x.
 	#
 	# try the below commands.
 	#
 	#     $ export PATH=$PATH
-	#     $ sudo PATH=$PATH ./setup.sh < settings.sample
+	#     $ sudo PATH=$PATH ./install.sh < settings
 fi
 
 # ------------------------------------------------------- #
@@ -140,6 +140,6 @@ else
 fi
 
 #/etc/init.d/crond restart
-systemctl restart crond
+systemctl restart crond  # for CentOS 7
 
 exit 0
