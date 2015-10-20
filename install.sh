@@ -56,7 +56,7 @@ echo "select the power manager:"
 echo "[0] pm-utils"
 echo "[1] systemd"
 read USER_INPUT
-if [ ${USER_INPUT} -eq 0 ];
+if [ ${USER_INPUT} -eq 0 ]; then
 	echo pm-utils is selected.
 	SLEEP_PATH="${PM_SLEEP_PATH}"
 	SLEEP_SCRIPT="${PM_SLEEP_SCRIPT}"
@@ -151,7 +151,7 @@ fi
 
 echo "${CRON_JOB}" >> "${CRON_FILE}"
 
-/etc/init.d/crond restart
+/etc/rc.d/init.d/crond restart
 #systemctl restart crond
 
 exit 0
