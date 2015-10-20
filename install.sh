@@ -45,9 +45,9 @@ PM_SLEEP_SCRIPT="81chinachu-sleep"
 PM_SLEEP_CMD="/usr/sbin/pm-hibernate"
 
 # variables: systemd
-SYSTEMCTL_SLEEP_PATH="/usr/lib/systemd/system-sleep/"
-SYSTEMCTL_SLEEP_SCRIPT="chinachu-sleep"
-SYSTEMCTL_SLEEP_CMD="/usr/bin/systemctl hibernate"
+SYSTEMD_SLEEP_PATH="/usr/lib/systemd/system-sleep/"
+SYSTEMD_SLEEP_SCRIPT="chinachu-sleep"
+SYSTEMD_SLEEP_CMD="/usr/bin/systemctl hibernate"
 
 # ------------------------------------------------------- #
 
@@ -57,13 +57,15 @@ echo "[0] pm-utils"
 echo "[1] systemd"
 read USER_INPUT
 if [ ${USER_INPUT} -eq 0 ];
+	echo pm-utils is selected.
 	SLEEP_PATH="${PM_SLEEP_PATH}"
 	SLEEP_SCRIPT="${PM_SLEEP_SCRIPT}"
 	SLEEP_CMD="${PM_SLEEP_CMD}"
 else
-	SLEEP_PATH="${SYSTEMCTL_PATH}"
-	SLEEP_SCRIPT="${SYSTEMCTL_SCRIPT}"
-	SLEEP_CMD="${SYSTEMCTL_CMD}"
+	echo systemd is selected.
+	SLEEP_PATH="${SYSTEMD_SLEEP_PATH}"
+	SLEEP_SCRIPT="${SYSTEMD_SLEEP_SCRIPT}"
+	SLEEP_CMD="${SYSTEMD_SLEEP_CMD}"
 fi
 
 # ------------------------------------------------------- #
@@ -72,34 +74,39 @@ fi
 cp ${SLEEP_SCRIPT}.sh ${SLEEP_SCRIPT}
 cp ${SH_SCRIPTS}.sh ${SH_SCRIPTS}
 for s in ${PY_SCRIPTS}; do
-        cp ${s}.py ${s}
+	cp ${s}.py ${s}
 done
 
 # take over the path
 sed -i -e "s|^\(PATH=\).*$|\1${PATH}|"  ${SLEEP_SCRIPT} ${SH_SCRIPTS}
 
 # get Chinachu URL
-echo "input your Chinachu url (e.g., http://localhost:10772)"
+echo "Chinachu url (e.g., http://localhost:10772):"
 read USER_INPUT
 USER_INPUT=`echo ${USER_INPUT} | sed -e "s|^\(http://.*:[0-9]*\).*#.*$|\1|"`
 sed -i -e "s|^\(CHINACHU_URL=\).*$|\1${USER_INPUT}|" ${SLEEP_SCRIPT} ${SH_SCRIPTS}
+echo "applied: ${USER_INPUT}"
 
-# get MARGIN_UPTIMERGIN_BOOT
-echo "input MARGIN_BOOT (e.g., 600 [sec.])"
+# get MERGIN_BOOT
+echo "Room between the next wake up and the next recording (e.g., 600 [sec.]):"
 read USER_INPUT
 USER_INPUT=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
 sed -i -e "s/^\(MARGIN_BOOT=\).*$/\1${USER_INPUT}/" ${SLEEP_SCRIPT}
+echo "applied: ${USER_INPUT}"
 
-echo "input MARGIN_UPTIME (e.g., 600 [sec.])"
+# get MARGIN_UPTIME
+echo "Period to not go into sleep after starting up (e.g., 600 [sec.]):"
 read USER_INPUT
 USER_INPUT=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
 sed -i -e "s/^\(MARGIN_UPTIME=\).*$/\1${USER_INPUT}/" ${SH_SCRIPTS}
+echo "applied: ${USER_INPUT}"
 
 # get MARGIN_SLEEP
-echo "input MARGIN_SLEEP (e.g., 600 [sec.])"
+echo "Period to not go into sleep before the next recording (e.g., 600 [sec.]):"
 read USER_INPUT
 USER_INPUT=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
 sed -i -e "s/^\(MARGIN_SLEEP=\).*$/\1${USER_INPUT}/" ${SH_SCRIPTS}
+echo "applied: ${USER_INPUT}"
 
 # chmod & move
 chmod +x ${SLEEP_SCRIPT}
@@ -121,25 +128,30 @@ done
 CRON_FILE="/var/spool/cron/root"
 CRON_LOG=""
 #CRON_LOG="2>>/tmp/cron-err.log"
-SLEEP_CMD="${SLEEP_CMD}"
 
 # ------------------------------------------------------- #
 
 # cron
-echo "input the period of running cron (e.g., 15 [min.])"
+echo "Period of running the cron (e.g., 15 [min.])"
 read USER_INPUT
 USER_INPUT=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
+echo "applied: ${USER_INPUT}"
+
 CRON_SCHEDULE="*/${USER_INPUT} * * * * "
 CRON_JOB="${BIN_PATH}/${SH_SCRIPTS} ${CRON_LOG} && sleep 10 && ${SLEEP_CMD} ${CRON_LOG}"
 
-if [ `grep "${CRON_JOB//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ] ; then
-	CRON_JOB="${CRON_SCHEDULE}${CRON_JOB}"
-	echo "${CRON_JOB}" >> "${CRON_FILE}"
+CRON_JOB="${CRON_SCHEDULE}${CRON_JOB}"
+
+if [ `grep "${BIN_PATH//\\/\\\\}/${SH_SCRIPTS//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ] ; then
+	:
 else
-	sed -i -e "s|^.*\(${CRON_JOB}\)$|${CRON_SCHEDULE}\1|" ${CRON_FILE}
+	sed -i -e "s|^.*${BIN_PATH}/${SH_SCRIPTS}.*$||g" ${CRON_FILE}
+	sed -i '/^\s*$/d' ${CRON_FILE}
 fi
 
-#/etc/init.d/crond restart
-systemctl restart crond
+echo "${CRON_JOB}" >> "${CRON_FILE}"
+
+/etc/init.d/crond restart
+#systemctl restart crond
 
 exit 0
