@@ -22,8 +22,11 @@ MARGIN_SLEEP=1800
 NOW=`date +%s`
 UPTIME=`uptime -s`
 BORDER=`date -d "${UPTIME} ${MARGIN_UPTIME} seconds" +%s`
+#echo now: `date -d @${NOW} +"${DATE_FORMAT}"`
+#echo uptime: `date -d "${UPTIME}" +"${DATE_FORMAT}"`
+#echo border: `date -d @${BORDER} +"${DATE_FORMAT}"`
 if [ ${NOW} -lt ${BORDER} ]; then
-	echo "[`date +"${DATE_FORMAT}"`] ${0}: It has not elapsed only a few minutes from a boot. (uptime: `date -d ${UPTIME} +"${DATE_FORMAT}"`)" 1>&2
+	echo "[`date +"${DATE_FORMAT}"`] ${0}: It has not elapsed only a few minutes from a boot. (uptime: `date -d "${UPTIME}" +"${DATE_FORMAT}"`)" 1>&2
 	exit 1
 fi
 
