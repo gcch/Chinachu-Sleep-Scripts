@@ -94,7 +94,7 @@ pm-utils のインストール
 
 移動。
 
-    # cd Chinachu-Sleep-Script
+    # cd Chinachu-Sleep-Scripts/
 
 設定ファイルを弄る。 (詳細は中身を参照。)
 
