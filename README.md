@@ -14,6 +14,7 @@ Chinachu サーバをスリープさせる際に、
 をチェックし、全て問題なければ、次の番組の少し前 (マージン設定可能) に起動タイマをセットし、休止状態に入るようにしている。
 
 他にもチェックすべきことは多々あるとは (個人的にも) 思っているが、とりあえずこんなところ。
+
 (個人的に一番やりたいのは、Chinachu の Web UI にアクセスしているときにはスリープしないようにすることですかね。API 的には無理くさいけどね。)
 
 ## Testing environment
@@ -27,32 +28,36 @@ Minimal でインストールしたけど、いろいろと入れたのでもう
 また、別の環境の場合は、適当に読み替えてください。
 
 ## File composition
-やっつけ仕事感が出ている部分も多々あるので、どなたか直して頂ければと。
+今回登場するスクリプトたち。
 
-* install.sh
-  * インストールスクリプト
-* 81chinachu-sleep.sh, chinachu-sleep.sh
-  * 次回起動時刻設定スクリプト
-  * スリープ (ハイバネーション・サスペンド) 時および復帰時に実行される。
-  * 前者が pm-utils 用、後者が systemd 用。やっていることは同じ。
-* chinachu-check-status.sh
-  * スリープ状態判定用スクリプト
-  * 追加で判定したいことがある場合には、この中に追記していく形になる。
-  * スリープ可能状態のとき、正常終了 (0) となる。
-* chinachu-is-recording.py
-  * Chinachu 録画状態取得スクリプト
-  * 引数として、Chinachu WUI の URL を渡す必要あり。
-  * 録画中であるとき、正常終了 (0) となる。
-* chinachu-get-next-time.py
-  * Chinachu 次回予約番組開始時刻取得スクリプト
-  * 引数として、Chinachu WUI の URL を渡す必要あり。
-  * 次に録画が予定されている番組の開始時刻が、UNIX タイムで出力される。
+Linux についてわからないことだらけであることもあって、微妙なところもあるかもですが、直して頂ければと。
+<dl>
+    <dt>install.sh</dt>
+    <dd>インストールスクリプト</dd>
+    
+    <dt>81chinachu-sleep.sh, chinachu-sleep.sh</dt>
+    <dd>次回起動時刻設定スクリプト<br />
+        スリープ (ハイバネーション・サスペンド) 時および復帰時に実行される。<br />
+        前者が pm-utils 用、後者が systemd 用。やっていることは同じ。</dd>
+    <dt>chinachu-check-status.sh</dt>
+    <dd>スリープ状態判定用スクリプト<br />
+        追加で判定したいことがある場合には、この中に追記していく形になる。<br />
+        スリープ可能状態のとき、正常終了 (0) となる。</dd>
+    <dt>chinachu-is-recording.py</dt>
+    <dd>Chinachu 録画状態取得スクリプト<br />
+        引数として、Chinachu WUI の URL を渡す必要あり。 (例: $ chinachu-is-recording <emph>http://localhost:10772</emph>)<br />
+        録画中であるとき、正常終了 (0) となる。</dd>
+    <dt>chinachu-get-next-time.py</dt>
+    <dd>Chinachu 次回予約番組開始時刻取得スクリプト<br />
+        引数として、Chinachu WUI の URL を渡す必要あり。 (例: $ chinachu-get-next-time <emph>http://localhost:10772</emph>)<br />
+        次に録画が予定されている番組の開始時刻が、UNIX タイムで出力される。</dd>
+</dl>
 
 
 ## Usage
-環境によるが、Python 3.x は必須。pm-utils を使うならそれも。
-後から systemd でもできることを知ったので、CentOS 7 だけど、pm-utils を使っている。
-一応、systemd にも対応できるようにしたつもりだが、上手く動くかは知らない(笑)
+環境によるが、Python 3.x は必須。pm-utils を使うならそれも。  
+後から systemd でもできることを知ったので、CentOS 7 だけど、pm-utils を使っている。  
+一応、systemd にも対応できるようにしたつもりだが、上手く動くかは試してないので知らない(笑)
 
 Python 3.x のインストールはこんな感じ。
 
