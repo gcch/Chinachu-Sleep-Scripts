@@ -4,7 +4,7 @@
 Chinachu サーバをスリープさせるためのスクリプトとそれを導入するためのスクリプトをまとめたもの。
 
 ## Description
-[Chinachu](https://chinachu.moe/) ([GitHub](https://github.com/kanreisa/Chinachu)) を使っている中で、やっぱりスリープしたい思いが強くなったので、いろいろなページを参考 (後述) にしつつ、Chinachu の簡単インストールを見習い、お手軽に導入できるスリープ環境構築スクリプトを作ってみたというもの。
+[Chinachu](https://chinachu.moe/) ([GitHub](https://github.com/kanreisa/Chinachu)) を使っている中で、やっぱりスリープしたい思いが強くなったので、いろいろなページを参考 (後述) にしつつ、Chinachu の簡単インストールを見習い、(比較的) お手軽に導入できるスリープ環境構築スクリプトを作ってみた。
 
 Chinachu サーバをスリープさせる際に、
 * Chinachu サーバが起動したばかりではないか
@@ -27,7 +27,27 @@ Minimal でインストールしたけど、いろいろと入れたのでもう
 また、別の環境の場合は、適当に読み替えてください。
 
 ## File composition
-後で書きます。
+やっつけ仕事感が出ている部分も多々あるので、どなたか直して頂ければと。
+
+* install.sh
+  * インストールスクリプト
+* 81chinachu-sleep.sh, chinachu-sleep.sh
+  * 次回起動時刻設定スクリプト
+  * スリープ (ハイバネーション・サスペンド) 時および復帰時に実行される。
+  * 前者が pm-utils 用、後者が systemd 用。やっていることは同じ。
+* chinachu-check-status.sh
+  * スリープ状態判定用スクリプト
+  * 追加で判定したいことがある場合には、この中に追記していく形になる。
+  * スリープ可能状態のとき、正常終了 (0) となる。
+* chinachu-is-recording.py
+  * Chinachu 録画状態取得スクリプト
+  * 引数として、Chinachu WUI の URL を渡す必要あり。
+  * 録画中であるとき、正常終了 (0) となる。
+* chinachu-get-next-time.py
+  * Chinachu 次回予約番組開始時刻取得スクリプト
+  * 引数として、Chinachu WUI の URL を渡す必要あり。
+  * 次に録画が予定されている番組の開始時刻が、UNIX タイムで出力される。
+
 
 ## Usage
 環境によるが、Python 3.x は必須。pm-utils を使うならそれも。
@@ -74,17 +94,17 @@ pm-utils のインストール
 
 インストールを開始する。
 
-    # chmod +x setup.sh
-    # ./setup.sh < settings
+    # chmod +x install.sh
+    # ./install.sh < settings
 
 で、おしまい。
 設定を変えたいときは、もう一度インストールをすればいい。
 
------
+---
 
 SSH 経由の sudo だと、PATH が引き継がれず、Python 3.x をインストールしていても、「そんなのない！」と言われる場合があります。
 
-    $ sudo ./setup.sh < settings
+    $ sudo ./install.sh < settings
     please install python 3.x.
 
 その時には、下記のように実行してみてください。
