@@ -7,6 +7,9 @@ Chinachu サーバをスリープさせるためのスクリプトとそれを�
 ## Description
 [Chinachu](https://chinachu.moe/) ([GitHub](https://github.com/kanreisa/Chinachu)) を使っている中で、やっぱりスリープしたい思いが強くなったので、いろいろなページを参考 (後述) にしつつ、Chinachu の簡単インストールを見習い、(比較的) お手軽に導入できるスリープ環境構築スクリプトを作ってみた。
 
+現時点では S4 ステート (ハイバネーション) 仕様。　　
+(というか、使ったマシンが S5 ステートからの起動に対応してなかったため。)
+
 Chinachu サーバをスリープさせる際に、
 
 * Chinachu サーバが起動したばかりではないか
@@ -21,7 +24,9 @@ Chinachu サーバをスリープさせる際に、
 
 
 ## Testing environment
-CentOS 7 (x86-64)。
+マシンは放置されていた EPSON Endeavor ST125E (Core 2 Duo P8600, 4GB RAM)。全く関係ない話だけど、リアルタイムストリーミングは無理。
+
+そして OS は CentOS 7 (x86-64)。
 
     $ cat /etc/centos-release
     CentOS Linux release 7.1.1503 (Core)
