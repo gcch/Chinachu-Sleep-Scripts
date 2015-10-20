@@ -3,6 +3,7 @@
 ## Overview
 Chinachu サーバをスリープさせるためのスクリプトとそれを導入するためのスクリプトをまとめたもの。
 
+
 ## Description
 [Chinachu](https://chinachu.moe/) ([GitHub](https://github.com/kanreisa/Chinachu)) を使っている中で、やっぱりスリープしたい思いが強くなったので、いろいろなページを参考 (後述) にしつつ、Chinachu の簡単インストールを見習い、(比較的) お手軽に導入できるスリープ環境構築スクリプトを作ってみた。
 
@@ -15,9 +16,9 @@ Chinachu サーバをスリープさせる際に、
 
 をチェックし、全て問題なければ、次の番組の少し前 (マージン設定可能) に起動タイマをセットし、休止状態に入るようにしている。
 
-他にもチェックすべきことは多々あるとは (個人的にも) 思っているが、とりあえずこんなところ。
-
+他にもチェックすべきことは多々あるとは (個人的にも) 思っているが、とりあえずこんなところ。  
 (個人的に一番やりたいのは、Chinachu の Web UI にアクセスしているときにはスリープしないようにすることですかね。API 的には無理くさいけどね。)
+
 
 ## Testing environment
 CentOS 7 (x86-64)。
@@ -29,9 +30,9 @@ Minimal でインストールしたけど、いろいろと入れたのでもう
 
 また、別の環境の場合は、適当に読み替えてください。
 
-## File composition
-今回登場するスクリプトたち。
 
+## File composition
+今回登場するスクリプトたち。  
 Linux についてわからないことだらけであることもあって、微妙なところもあるかもですが、直して頂ければと。
 <dl>
     <dt>install.sh</dt>
@@ -82,7 +83,7 @@ pm-utils のインストール
 
     # yum install pm-utils
 
-必要なパッケージの導入が済んだので、本題の方に。
+必要なパッケージの導入が済んだので、本題の方に。  
 まず、作業フォルダに移動。
 
     # cd /usr/local/src
@@ -120,6 +121,7 @@ SSH 経由の sudo だと、PATH が引き継がれず、Python 3.x をインス
     $ export PATH=$PATH
     $ sudo PATH=$PATH ./setup.sh < settings.sample
 
+
 ## References
 参考にさせて頂いたサイト。
 * [chinachu + pm-utils で自動起動 | haruo31's blog](http://haruo31.underthetree.jp/2013/09/04/chinachu-pm-utils-%E3%81%A7%E8%87%AA%E5%8B%95%E8%B5%B7%E5%8B%95/)
@@ -127,8 +129,10 @@ SSH 経由の sudo だと、PATH が引き継がれず、Python 3.x をインス
 * [サスペンドとハイバネート - ArchWiki](https://wiki.archlinuxjp.org/index.php/%E3%82%B5%E3%82%B9%E3%83%9A%E3%83%B3%E3%83%89%E3%81%A8%E3%83%8F%E3%82%A4%E3%83%90%E3%83%8D%E3%83%BC%E3%83%88)
 * [電源管理 - ArchWiki](https://wiki.archlinuxjp.org/index.php/%E9%9B%BB%E6%BA%90%E7%AE%A1%E7%90%86)
 
+
 ## License
 This script is released under the MIT license. See the LICENSE file.
+
 
 ## Author
 * tag (Twitter: [@tag_ism](https://twitter.com/tag_ism "tag (@tag_ism) | Twitter") / Blog: http://karat5i.blogspot.jp/)
