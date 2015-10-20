@@ -37,19 +37,22 @@ Linux についてわからないことだらけであることもあって、�
 <dl>
     <dt>install.sh</dt>
     <dd>インストールスクリプト</dd>
-    
+
     <dt>81chinachu-sleep.sh, chinachu-sleep.sh</dt>
     <dd>次回起動時刻設定スクリプト<br />
         スリープ (ハイバネーション・サスペンド) 時および復帰時に実行される。<br />
         前者が pm-utils 用、後者が systemd 用。やっていることは同じ。</dd>
+
     <dt>chinachu-check-status.sh</dt>
     <dd>スリープ状態判定用スクリプト<br />
         追加で判定したいことがある場合には、この中に追記していく形になる。<br />
         スリープ可能状態のとき、正常終了 (0) となる。</dd>
+
     <dt>chinachu-is-recording.py</dt>
     <dd>Chinachu 録画状態取得スクリプト<br />
         引数として、Chinachu WUI の URL を渡す必要あり。 (例: $ chinachu-is-recording <em>http://localhost:10772</em>)<br />
         録画中であるとき、正常終了 (0) となる。</dd>
+
     <dt>chinachu-get-next-time.py</dt>
     <dd>Chinachu 次回予約番組開始時刻取得スクリプト<br />
         引数として、Chinachu WUI の URL を渡す必要あり。 (例: $ chinachu-get-next-time <em>http://localhost:10772</em>)<br />
