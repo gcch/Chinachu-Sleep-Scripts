@@ -160,6 +160,8 @@ elif [ `cat /etc/os-release | grep "^VERSION=" | sed -e "s/^VERSION=.*\([0-9]\).
 elif [ `cat /etc/os-release | grep "^VERSION=" | sed -e "s/^VERSION=.*\([0-9]\).*$/\1/"` -eq 7 ]; then
 	# for RHEL / CentOS Linux 7.x
 	systemctl restart crond.service
+else
+	echo "please restart crond by yourself."
 fi
 
 exit 0
