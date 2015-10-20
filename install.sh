@@ -151,7 +151,15 @@ fi
 
 echo "${CRON_JOB}" >> "${CRON_FILE}"
 
-/etc/rc.d/init.d/crond restart
-#systemctl restart crond
+# restart crond
+if [ -f /etc/init.d/crond ]; then
+	/etc/init.d/crond restart
+elif [ `cat /etc/os-release | grep "^VERSION=" |sed -e "s/^VERSION=.*\([0-9]\).*$/\1/"` -eq 6 ]; then
+	# for RHEL / CentOS Linux 6.x
+	service crond restart
+elif [ `cat /etc/os-release | grep "^VERSION=" |sed -e "s/^VERSION=.*\([0-9]\).*$/\1/"` -eq 7 ]; then
+	# for RHEL / CentOS Linux 7.x
+	systemctl restart crond.service
+fi
 
 exit 0
