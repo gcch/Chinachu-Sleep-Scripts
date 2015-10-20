@@ -100,7 +100,7 @@ SSH 経由の sudo だと、PATH が引き継がれず、Python 3.x をインス
 * [電源管理 - ArchWiki](https://wiki.archlinuxjp.org/index.php/%E9%9B%BB%E6%BA%90%E7%AE%A1%E7%90%86)
 
 ## License
-This script is released under the MIT license. See LICENSE.txt.
+This script is released under the MIT license. See the LICENSE file.
 
 ## Author
 * tag (Twitter: [@tag_ism](https://twitter.com/tag_ism "tag (@tag_ism) | Twitter") / Blog: http://karat5i.blogspot.jp/)
