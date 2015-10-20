@@ -21,7 +21,7 @@ MARGIN_SLEEP=1800
 # check the uptime
 NOW=`date +%s`
 #UPTIME=date -d "`uptime -s`" +%s
-UPTIME=$(ALARM_DATE=$(cat /proc/driver/rtc | egrep 'alrm_time|alrm_date' | echo $(sed -e "s/^alrm_time.* \([0-9]\+:[0-9]\+:[0-9]\+\)$/\1/" -e "s/^alrm_date.* \([0-9]\+-[0-9]\+-[0-9]\+\)$/\1/")) ; date -d "${ALARM_DATE}" +%s)
+UPTIME=$(ALARM_DATE=$(cat /proc/driver/rtc | egrep 'alrm_time|alrm_date' | echo $(sed -e "s/^alrm_time.* \([0-9]\+:[0-9]\+:[0-9]\+\)$/\1/" -e "s/^alrm_date.* \([0-9]\+-[0-9]\+-[0-9]\+\)$/\1/") UTC) ; date -d "${ALARM_DATE}" +%s)
 BORDER=$((${UPTIME} + ${MARGIN_UPTIME}))
 if [ ${NOW} -lt ${BORDER} ]; then
         echo "[`date +"${DATE_FORMAT}"`] ${0}: It has not elapsed only a few minutes from a boot. (uptime: `date -d @${UPTIME} +"${DATE_FORMAT}"`)" 1>&2
