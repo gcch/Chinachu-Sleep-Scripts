@@ -71,9 +71,10 @@ Python 3.x のインストールはこんな感じ。
     # vi /etc/profile
     # source /etc/profile
 
-/etc/profile:
-
-    export PATH=/usr/local/python-3.4/bin:$PATH
+<dl>
+    <dt>Add the below line to /etc/profile:</dt>
+    <dd>export PATH=/usr/local/python-3.4/bin:$PATH</dd>
+</dl>
 
 pm-utils のインストール
 
