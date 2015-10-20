@@ -47,11 +47,11 @@ Linux についてわからないことだらけであることもあって、�
         スリープ可能状態のとき、正常終了 (0) となる。</dd>
     <dt>chinachu-is-recording.py</dt>
     <dd>Chinachu 録画状態取得スクリプト<br />
-        引数として、Chinachu WUI の URL を渡す必要あり。 (例: $ chinachu-is-recording <emph>http://localhost:10772</emph>)<br />
+        引数として、Chinachu WUI の URL を渡す必要あり。 (例: $ chinachu-is-recording <em>http://localhost:10772</em>)<br />
         録画中であるとき、正常終了 (0) となる。</dd>
     <dt>chinachu-get-next-time.py</dt>
     <dd>Chinachu 次回予約番組開始時刻取得スクリプト<br />
-        引数として、Chinachu WUI の URL を渡す必要あり。 (例: $ chinachu-get-next-time <emph>http://localhost:10772</emph>)<br />
+        引数として、Chinachu WUI の URL を渡す必要あり。 (例: $ chinachu-get-next-time <em>http://localhost:10772</em>)<br />
         次に録画が予定されている番組の開始時刻が、UNIX タイムで出力される。</dd>
 </dl>
 
