@@ -56,6 +56,7 @@ echo "select the power manager:"
 echo "[0] pm-utils"
 echo "[1] systemd"
 read USER_INPUT
+USER_INPUT=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
 if [ ${USER_INPUT} -eq 0 ]; then
 	echo pm-utils is selected.
 	SLEEP_PATH="${PM_SLEEP_PATH}"
