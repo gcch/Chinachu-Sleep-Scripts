@@ -90,7 +90,7 @@ pm-utils のインストール
 
 クローン。
 
-    # git clone https://github.com/gcch/Chinachu-Sleep-Script.git
+    # git clone https://github.com/gcch/Chinachu-Sleep-Scripts.git
 
 移動。
 
