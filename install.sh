@@ -140,6 +140,6 @@ else
 fi
 
 #/etc/init.d/crond restart
-systemctl restart crond  # for CentOS 7
+systemctl restart crond
 
 exit 0
