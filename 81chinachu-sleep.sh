@@ -30,6 +30,7 @@ case ${1} in
 	;;
 	thaw|resume)
 		echo 0 > ${WAKEALARM}
+		date -d +1sec +%s > ${WAKEALARM}
 		echo "This system is waking up now."
 	;;
 esac
