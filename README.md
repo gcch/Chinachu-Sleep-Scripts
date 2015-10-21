@@ -1,4 +1,5 @@
 # Chinachu Sleep Scripts
+現在、弄り途中のため、正常に動作しない可能性があります。 (This scripts are under development now.)
 
 ## Overview
 Chinachu サーバをスリープさせるためのスクリプトとそれを導入するためのスクリプトをまとめたもの。
