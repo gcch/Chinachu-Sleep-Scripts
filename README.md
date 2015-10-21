@@ -143,7 +143,7 @@ SSH 経由の sudo だと、PATH が引き継がれず、Python 3.x をインス
 その時には、下記のように実行してみてください。
 
     $ export PATH=$PATH
-    $ sudo PATH=$PATH ./setup.sh < settings.sample
+    $ sudo PATH=$PATH ./setup.sh < settings
 
 
 ## References
