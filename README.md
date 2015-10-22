@@ -1,8 +1,8 @@
 # Chinachu Sleep Scripts
-現在、弄り途中のため、正常に動作しない可能性があります。 (These scripts are under development now.)
+*現在、改良途中のため、正常に動作しない可能性があります。 (These scripts are under development now.)*
 
 ## Overview
-Chinachu サーバをスリープさせるためのスクリプトとそれを導入するためのスクリプトをまとめたもの。
+Chinachu サーバをスリープさせるためのスクリプトと Chinachu REST API の情報を取得するスクリプト、そしてこれらを導入するためのスクリプトをまとめたもの。
 
 
 ## Description
@@ -20,9 +20,7 @@ Chinachu サーバをスリープさせる際に、
 * Chinachu サーバにログインしているユーザはいないか
 * (Samba が構築されている環境では) Samba 経由で Chinahcu サーバにアクセスしているユーザはいないか
 
-をチェックし、全て問題なければ、次の番組の少し前 (マージン設定可能) に起動タイマをセットし、休止状態に入るようにしている。
-
-他にもチェックすべきことは多々あるとは (個人的にも) 思っているが、とりあえずこんなところ。  
+をチェックし、全て問題なければ、次の番組の少し前 (マージン設定可能) に起動タイマをセットする。
 
 
 ## Testing environment
