@@ -30,7 +30,7 @@ case ${1}/${2} in
 	;;
 	post/*)
 		echo 0 > ${WAKEALARM}
-		date -d +1sec +%s > ${WAKEALARM}
-		echo "This system is waking up now."
+		#date -d +1sec +%s > ${WAKEALARM}
+		echo "This system is waking up from hibernate or suspend now."
 	::
 esac
