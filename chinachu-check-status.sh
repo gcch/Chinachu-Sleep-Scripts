@@ -29,14 +29,14 @@ if [ ${NOW} -lt ${BORDER} ]; then
 fi
 
 # check the status of Chinachu: Is Chinachu recording
-if `chinachu-is-recording ${CHINACHU_URL}`; then
+if `chinachu-api-is-recording ${CHINACHU_URL}`; then
 	echo "[`date +"${DATE_FORMAT}"`] ${0}: Chinachu is recording now." 1>&2
 	exit 1
 fi
 
 
 # check the status of Chinachu: Is Chinachu waiting for the next recording
-NEXT=`chinachu-get-next-time ${CHINACHU_URL}`
+NEXT=`chinachu-api-get-next-time ${CHINACHU_URL}`
 BORDER=$((${NEXT} - ${MARGIN_SLEEP}))
 if [ ${NOW} -gt ${BORDER} ]; then
 	echo "[`date +"${DATE_FORMAT}"`] ${0}: Chinachu is waiting for the next recording. (next: `date -d @${NEXT} +"${DATE_FORMAT}"`)" 1>&2
