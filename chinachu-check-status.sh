@@ -36,6 +36,7 @@ fi
 # ------------------------------------------------------- #
 
 # check the status of Chinachu: is Chinachu waiting for the next recording
+NOW=`date +%s`
 NEXT=`chinachu-api-get-next-time ${CHINACHU_URL}`
 BORDER=$((${NEXT} - ${MARGIN_SLEEP}))
 if [ ${NOW} -gt ${BORDER} ]; then
