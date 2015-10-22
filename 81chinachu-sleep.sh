@@ -19,7 +19,7 @@ MARGIN_BOOT=600
 
 case ${1} in
 	hibernate|suspend)
-		NEXT_PROG_START_TIME=`chinachu-get-next-time ${CHINACHU_URL}`
+		NEXT_PROG_START_TIME=`chinachu-api-get-next-time ${CHINACHU_URL}`
 		WAKEUP_TIME=`expr ${NEXT_PROG_START_TIME} - ${MARGIN_BOOT}`
 		if `date -d @${WAKEUP_TIME} +%s > ${WAKEALARM}`; then
 			echo "[`date +"${DATE_FORMAT}"`] ${0}: set the next wake up time at `date -d @${WAKEUP_TIME} "${DATE_FORMAT}"`" 1>&2
