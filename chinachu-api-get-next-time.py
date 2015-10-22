@@ -3,7 +3,7 @@
 
 # ------------------------------------------------------- #
 #
-# chinachu-get-next-time.py
+# chinachu-api-get-next-time.py
 #
 # Copyright (c) 2015 tag
 #
