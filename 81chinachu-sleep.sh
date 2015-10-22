@@ -12,6 +12,7 @@
 PATH=${PATH}
 WAKEALARM=/sys/class/rtc/rtc0/wakealarm
 DATE_FORMAT="%Y-%m-%d %T"
+TMP_SLEEP="/var/tmp/.chinachu-sleep"
 
 # variables
 CHINACHU_URL="http://localhost:10772"
@@ -30,6 +31,7 @@ case ${1} in
 	;;
 	thaw|resume)
 		echo 0 > ${WAKEALARM}
+		touch ${TMP_SLEEP}
 		echo "This system is waking up from hibernate or suspend now."
 	;;
 esac
