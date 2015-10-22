@@ -162,7 +162,7 @@ SSH 経由の sudo だと、PATH が引き継がれず、Python 3.x をインス
 * [録画サーバー用スクリプト (GitHub Gist)](https://gist.github.com/jtwp470/ca92c6a7b3d1c819acdc)
 * [サスペンドとハイバネート - ArchWiki](https://wiki.archlinuxjp.org/index.php/%E3%82%B5%E3%82%B9%E3%83%9A%E3%83%B3%E3%83%89%E3%81%A8%E3%83%8F%E3%82%A4%E3%83%90%E3%83%8D%E3%83%BC%E3%83%88)
 * [電源管理 - ArchWiki](https://wiki.archlinuxjp.org/index.php/%E9%9B%BB%E6%BA%90%E7%AE%A1%E7%90%86)
-
+* [ACPI Wakeup - MythTV Official Wiki](https://www.mythtv.org/wiki/ACPI_Wakeup)
 
 ## License
 This script is released under the MIT license. See the LICENSE file.
