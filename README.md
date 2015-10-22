@@ -57,17 +57,17 @@ Linux についてわからないことだらけであることもあって、�
 
     <dt>chinachu-api-get-connected-count.py</dt>
     <dd>Chinachu WUI アクセスユーザ数取得スクリプト<br />
-        引数として、Chinachu WUI の URL を渡す必要あり。 (例: $ chinachu-get-next-time <em>http://localhost:10772</em>)<br />
+        引数として、Chinachu WUI の URL を渡す必要あり。<br />
         WUI へのアクセスユーザ数が出力される。</dd>
 
     <dt>chinachu-api-get-next-time.py</dt>
     <dd>Chinachu 次回予約番組開始時刻取得スクリプト<br />
-        引数として、Chinachu WUI の URL を渡す必要あり。 (例: $ chinachu-get-next-time <em>http://localhost:10772</em>)<br />
+        引数として、Chinachu WUI の URL を渡す必要あり。<br />
         次に録画が予定されている番組の開始時刻が、UNIX タイムで出力される。</dd>
 
     <dt>chinachu-api-is-recording.py</dt>
     <dd>Chinachu 録画状態取得スクリプト<br />
-        引数として、Chinachu WUI の URL を渡す必要あり。 (例: $ chinachu-is-recording <em>http://localhost:10772</em>)<br />
+        引数として、Chinachu WUI の URL を渡す必要あり。<br />
         録画中であるとき、正常終了 (0) となる。</dd>
 
 </dl>
