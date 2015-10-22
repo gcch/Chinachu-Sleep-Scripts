@@ -17,6 +17,33 @@ CHINACHU_URL="http://localhost:10772"
 MARGIN_UPTIME=600
 MARGIN_SLEEP=1800
 
+# ------------------------------------------------------- #
+
+# check the status of Chinachu: connected count
+if [ `chinachu-api-get-connected-count ${CHINACHU_URL}` -gt 0 ]; then
+        echo "[`date +"${DATE_FORMAT}"`] ${0}: Someone is connecting to Chinachu WUI." 1>&2
+        exit 1
+fi
+
+# ------------------------------------------------------- #
+
+# check the status of Chinachu: is Chinachu recording
+if `chinachu-api-is-recording ${CHINACHU_URL}`; then
+	echo "[`date +"${DATE_FORMAT}"`] ${0}: Chinachu is recording now." 1>&2
+	exit 1
+fi
+
+# ------------------------------------------------------- #
+
+# check the status of Chinachu: is Chinachu waiting for the next recording
+NEXT=`chinachu-api-get-next-time ${CHINACHU_URL}`
+BORDER=$((${NEXT} - ${MARGIN_SLEEP}))
+if [ ${NOW} -gt ${BORDER} ]; then
+	echo "[`date +"${DATE_FORMAT}"`] ${0}: Chinachu is waiting for the next recording. (next: `date -d @${NEXT} +"${DATE_FORMAT}"`)" 1>&2
+	exit 1
+fi
+
+# ------------------------------------------------------- #
 
 # check the uptime
 NOW=`date +%s`
@@ -28,21 +55,7 @@ if [ ${NOW} -lt ${BORDER} ]; then
         exit 1
 fi
 
-# check the status of Chinachu: Is Chinachu recording
-if `chinachu-api-is-recording ${CHINACHU_URL}`; then
-	echo "[`date +"${DATE_FORMAT}"`] ${0}: Chinachu is recording now." 1>&2
-	exit 1
-fi
-
-
-# check the status of Chinachu: Is Chinachu waiting for the next recording
-NEXT=`chinachu-api-get-next-time ${CHINACHU_URL}`
-BORDER=$((${NEXT} - ${MARGIN_SLEEP}))
-if [ ${NOW} -gt ${BORDER} ]; then
-	echo "[`date +"${DATE_FORMAT}"`] ${0}: Chinachu is waiting for the next recording. (next: `date -d @${NEXT} +"${DATE_FORMAT}"`)" 1>&2
-	exit 1
-fi
-
+# ------------------------------------------------------- #
 
 # check whether someone is logging in to this server
 USERS=`who -u | wc -l`
@@ -51,6 +64,7 @@ if [ ${USERS} -gt 0 ]; then
 	exit 1
 fi
 
+# ------------------------------------------------------- #
 
 # normal end
 exit 0
