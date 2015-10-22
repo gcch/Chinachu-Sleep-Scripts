@@ -57,7 +57,7 @@ fi
 
 # ------------------------------------------------------- #
 
-# check the time of waking up from sleep
+# check the time from waking up from sleep
 TMP_SLEEP="/var/tmp/.chinachu-sleep"
 if [ -f ${TMP_SLEEP} ]; then
 	NOW=`date +%s`
