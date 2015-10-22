@@ -36,7 +36,7 @@ fi
 
 # variables: scripts
 BIN_PATH="/usr/local/bin"
-PY_SCRIPTS="chinachu-api-get-next-time chinachu-api-is-recording"
+PY_SCRIPTS="chinachu-api-get-connected-count.py chinachu-api-get-next-time chinachu-api-is-recording"
 SH_SCRIPTS="chinachu-check-status"
 
 # variables: pm-utils
