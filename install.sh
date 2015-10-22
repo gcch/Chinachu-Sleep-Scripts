@@ -143,7 +143,7 @@ CRON_JOB="${BIN_PATH}/${SH_SCRIPTS} ${CRON_LOG} && sleep 10 && ${SLEEP_CMD} ${CR
 
 CRON_JOB="${CRON_SCHEDULE}${CRON_JOB}"
 
-if [ `grep "${BIN_PATH//\\/\\\\}/${SH_SCRIPTS//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ] ; then
+if [ `grep "${BIN_PATH//\\/\\\\}/${SH_SCRIPTS//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ]; then
 	:
 else
 	sed -i -e "s|^.*${BIN_PATH}/${SH_SCRIPTS}.*$||g" ${CRON_FILE}
