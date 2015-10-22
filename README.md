@@ -2,7 +2,7 @@
 *現在、改良途中のため、正常に動作しない可能性があります。 (These scripts are under development now.)*
 
 ## Overview
-Chinachu サーバをスリープさせるためのスクリプトと Chinachu REST API の情報を取得するスクリプト、そしてこれらを導入するためのスクリプトをまとめたもの。
+Chinachu サーバをスリープさせる際に必要なスクリプトと Chinachu REST API の情報を取得するスクリプト、そしてこれらを導入するためのスクリプトをまとめたもの。
 
 
 ## Description
