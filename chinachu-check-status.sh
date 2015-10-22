@@ -58,22 +58,22 @@ fi
 
 # ------------------------------------------------------- #
 
-# check whether someone is logging in to this server
-USERS=`who -u | wc -l`
-if [ ${USERS} -gt 0 ]; then
-	echo "[`date +"${DATE_FORMAT}"`] ${0}: Someone is logging in to this server." 1>&2
-	exit 1
-fi
-
-# ------------------------------------------------------- #
-
-# check whether someone is accessing this server via Samba
+# check whether someone is accessing this server via Samba (root only can execute normally)
 if type smbstatus 1>/dev/null 2>&1; then
         SMB_USERS=`smbstatus -p | grep "^[0-9]" | wc -l`
         if [ ${SMB_USERS} -gt 0 ]; then
                 echo "[`date +"${DATE_FORMAT}"`] ${0}: Someone is accessing this server via Samba." 1>&2
         fi
         exit 1
+fi
+
+# ------------------------------------------------------- #
+
+# check whether someone is logging in to this server
+USERS=`who -u | wc -l`
+if [ ${USERS} -gt 0 ]; then
+	echo "[`date +"${DATE_FORMAT}"`] ${0}: Someone is logging in to this server." 1>&2
+	exit 1
 fi
 
 # ------------------------------------------------------- #
