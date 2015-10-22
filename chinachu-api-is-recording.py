@@ -3,7 +3,7 @@
 
 # ------------------------------------------------------- #
 #
-# chinachu-is-recording.py
+# chinachu-api-is-recording.py
 #
 # Copyright (c) 2015 tag
 #
