@@ -66,5 +66,17 @@ fi
 
 # ------------------------------------------------------- #
 
+# check whether someone is accessing this server via Samba
+if type smbstatus 1>/dev/null 2>&1; then
+        SMB_USERS=`smbstatus -p | grep "^[0-9]" | wc -l`
+        if [ ${SMB_USERS} -gt 0 ]; then
+                echo "[`date +"${DATE_FORMAT}"`] ${0}: Someone is accessing this server via Samba." 1>&2
+        fi
+        exit 1
+fi
+
+# ------------------------------------------------------- #
+
+
 # normal end
 exit 0
