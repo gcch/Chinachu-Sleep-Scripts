@@ -25,7 +25,7 @@ Chinachu サーバをスリープさせる際に、
 
 
 ## Testing environment
-マシンは放置されていた EPSON Endeavor ST125E (Core 2 Duo P8600, 4GB RAM)。全く関係ない話だけど、リアルタイムストリーミングは無理。
+マシンは放置されていた EPSON Endeavor ST125E (Core 2 Duo P8600, 4GB RAM)。全く関係ない話だけど、エンコ能力が皆無に等しいので (放送波のリアルタイムノーエンコード以外の) ストリーミングは無理。
 
 そして OS は CentOS 7 (x86-64)。
 
