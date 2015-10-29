@@ -3,4 +3,5 @@ http://localhost:10772	# Chinachu URL
 600			# Room between the next wake up and the next recording [sec.]
 900			# Period to not go into sleep after waking up [sec.]
 3600			# Period to not go into sleep before the next recording [sec.]
+05:05                   # Times of updating EPG forcibly
 10			# Period of running the cron [min.]
