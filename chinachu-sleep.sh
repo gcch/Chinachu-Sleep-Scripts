@@ -15,7 +15,6 @@ WAKEALARM=/sys/class/rtc/rtc0/wakealarm
 DATE_FORMAT="%Y-%m-%d %T"
 TMP_SLEEP="/var/tmp/.chinachu-sleep"
 CMD_CHINACHU_API_GET_NEXT_TIME="/usr/local/bin/chinachu-api-get-next-time"
-CMD_GET_NEAREST_FUTURE_TIME="/usr/local/bin/get-nearest-future-time"
 
 # variables
 CHINACHU_URL="http://localhost:10772"
