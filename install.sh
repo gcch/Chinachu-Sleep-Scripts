@@ -37,7 +37,8 @@ fi
 # variables: scripts
 BIN_PATH="/usr/local/bin"
 PY_SCRIPTS="chinachu-api-get-connected-count chinachu-api-get-next-time chinachu-api-is-recording"
-SH_SCRIPTS="chinachu-check-status"
+GET_NEAREST_TIME_SCRIPT="get-nearest-future-time"
+CHECK_STATUS_SCRIPT="chinachu-check-status"
 
 # variables: pm-utils
 PM_SLEEP_PATH="/etc/pm/sleep.d"
@@ -73,19 +74,20 @@ fi
 
 # duplicate
 cp ${SLEEP_SCRIPT}.sh ${SLEEP_SCRIPT}
-cp ${SH_SCRIPTS}.sh ${SH_SCRIPTS}
+cp ${GET_NEAREST_TIME_SCRIPT}.sh ${GET_NEAREST_TIME_SCRIPT}
+cp ${CHECK_STATUS_SCRIPT}.sh ${CHECK_STATUS_SCRIPT}
 for s in ${PY_SCRIPTS}; do
 	cp ${s}.py ${s}
 done
 
 # take over the path
-sed -i -e "s|^\(PATH=\).*$|\1${PATH}|"  ${SLEEP_SCRIPT} ${SH_SCRIPTS}
+sed -i -e "s|^\(PATH=\).*$|\1${PATH}|" ${SLEEP_SCRIPT} ${CHECK_STATUS_SCRIPT}
 
 # get Chinachu URL
 echo "Chinachu url (e.g., http://localhost:10772):"
 read USER_INPUT
 USER_INPUT=`echo ${USER_INPUT} | sed -e "s|^\(http://.*:[0-9]*\).*#.*$|\1|"`
-sed -i -e "s|^\(CHINACHU_URL=\).*$|\1${USER_INPUT}|" ${SLEEP_SCRIPT} ${SH_SCRIPTS}
+sed -i -e "s|^\(CHINACHU_URL=\).*$|\1${USER_INPUT}|" ${SLEEP_SCRIPT} ${CHECK_STATUS_SCRIPT}
 echo "applied: ${USER_INPUT}"
 
 # get MERGIN_BOOT
@@ -96,18 +98,49 @@ sed -i -e "s/^\(MARGIN_BOOT=\).*$/\1${USER_INPUT}/" ${SLEEP_SCRIPT}
 echo "applied: ${USER_INPUT}"
 
 # get MARGIN_UPTIME
-echo "Period to not go into sleep after starting up (e.g., 600 [sec.]):"
+echo "Period to not go into sleep after starting up (e.g., 900 [sec.]):"
 read USER_INPUT
 USER_INPUT=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
-sed -i -e "s/^\(MARGIN_UPTIME=\).*$/\1${USER_INPUT}/" ${SH_SCRIPTS}
+sed -i -e "s/^\(MARGIN_UPTIME=\).*$/\1${USER_INPUT}/" ${CHECK_STATUS_SCRIPT}
 echo "applied: ${USER_INPUT}"
 
 # get MARGIN_SLEEP
-echo "Period to not go into sleep before the next recording (e.g., 600 [sec.]):"
+echo "Period to not go into sleep before the next recording (e.g., 3600 [sec.]):"
 read USER_INPUT
 USER_INPUT=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
-sed -i -e "s/^\(MARGIN_SLEEP=\).*$/\1${USER_INPUT}/" ${SH_SCRIPTS}
+sed -i -e "s/^\(MARGIN_SLEEP=\).*$/\1${USER_INPUT}/" ${CHECK_STATUS_SCRIPT}
 echo "applied: ${USER_INPUT}"
+
+# get SCHEDULE_UPDATE_EPG
+echo "Times of updating epg (e.g., 0:00, 05:05, 23:59):"
+read USER_INPUT
+USER_INPUT=( `echo ${USER_INPUT} | tr -s "," " "` )
+#echo ${USER_INPUT[@]}
+for (( I = 0; I < ${#USER_INPUT[@]}; I++)); do
+#	echo ${USER_INPUT[$I]}
+	TMP="`echo ${USER_INPUT[$I]} | grep -e "^[0-1]\{0,1\}[0-9]:[0-5]\{0,1\}[0-9]$" -e "^2[0-3]:[0-5]\{0,1\}[0-9]$"` ${TMP}"
+done
+TMP=( `echo ${TMP} | sed -e "s/  */ /g"` )
+USER_INPUT="${TMP}"
+sed -i -e "s/^\(SCHEDULE_UPDATE_EPG=\).*$/\1\"${USER_INPUT}\"/" ${SLEEP_SCRIPT}
+echo "applied: ${USER_INPUT}"
+
+# setup cron for updating epg
+CRON_FILE="/var/spool/cron/root"
+USER_INPUT=( ${USER_INPUT} )
+CRON_JOB="/home/chinachu_dtv/chinachu/chinachu update -f; /usr/sbin/pm-hibernate"
+if [ `grep "${CRON_JOB//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ]; then
+	:
+else
+	sed -i -e "s|^.*${CRON_JOB}.*$||g" ${CRON_FILE}
+	sed -i '/^\s*$/d' ${CRON_FILE}
+fi
+for (( I = 0; I < ${#USER_INPUT[@]}; I++)); do
+	HOUR=`date -d ${USER_INPUT[$I]} +%H`
+	MIN=`date -d ${USER_INPUT[$I]} +%M`
+	CRON_ENTRY="$((10#${MIN})) $((10#${HOUR})) * * * ${CRON_JOB}"
+	echo "${CRON_ENTRY}" >> "${CRON_FILE}"
+done
 
 # chmod & move
 chmod +x ${SLEEP_SCRIPT}
@@ -118,7 +151,7 @@ for s in ${PY_SCRIPTS}; do
 	mv ${s} ${BIN_PATH}
 done
 
-for s in ${SH_SCRIPTS}; do
+for s in ${CHECK_STATUS_SCRIPT}; do
 	chmod +x ${s}
 	mv ${s} ${BIN_PATH}
 done
@@ -139,14 +172,14 @@ USER_INPUT=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
 echo "applied: ${USER_INPUT}"
 
 CRON_SCHEDULE="*/${USER_INPUT} * * * * "
-CRON_JOB="${BIN_PATH}/${SH_SCRIPTS} ${CRON_LOG} && sleep 10 && ${SLEEP_CMD} ${CRON_LOG}"
+CRON_JOB="${BIN_PATH}/${CHECK_STATUS_SCRIPT} ${CRON_LOG} && sleep 10 && ${SLEEP_CMD} ${CRON_LOG}"
 
 CRON_JOB="${CRON_SCHEDULE}${CRON_JOB}"
 
-if [ `grep "${BIN_PATH//\\/\\\\}/${SH_SCRIPTS//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ]; then
+if [ `grep "${BIN_PATH//\\/\\\\}/${CHECK_STATUS_SCRIPT//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ]; then
 	:
 else
-	sed -i -e "s|^.*${BIN_PATH}/${SH_SCRIPTS}.*$||g" ${CRON_FILE}
+	sed -i -e "s|^.*${BIN_PATH}/${CHECK_STATUS_SCRIPT}.*$||g" ${CRON_FILE}
 	sed -i '/^\s*$/d' ${CRON_FILE}
 fi
 
