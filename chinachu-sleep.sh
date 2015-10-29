@@ -13,15 +13,24 @@ PATH=${PATH}
 WAKEALARM=/sys/class/rtc/rtc0/wakealarm
 DATE_FORMAT="%Y-%m-%d %T"
 TMP_SLEEP="/var/tmp/.chinachu-sleep"
+CMD_CHINACHU_API_GET_NEXT_TIME="/usr/local/bin/chinachu-api-get-next-time"
+CMD_GET_NEAREST_FUTURE_TIME="/usr/local/bin/get-nearest-future-time"
 
 # variables
 CHINACHU_URL="http://localhost:10772"
 MARGIN_BOOT=600
+SCHEDULE_UPDATE_EPG=05:55
 
 case ${1}/${2} in
 	pre/*)
-		NEXT_PROG_START_TIME=`chinachu-api-get-next-time ${CHINACHU_URL}`
+		NEXT_PROG_START_TIME=`${CMD_CHINACHU_API_GET_NEXT_TIME} ${CHINACHU_URL}`
+		UPDATE_EPG_TIME=`${CMD_GET_NEAREST_FUTURE_TIME} ${SCHEDULE_UPDATE_EPG}`
 		WAKEUP_TIME=`expr ${NEXT_PROG_START_TIME} - ${MARGIN_BOOT}`
+		if [ "${UPDATE_EPG_TIME}" -ne "" ]; then
+			if [ ${NEXT_PROG_START_TIME} -gt ${UPDATE_EPG_TIME} ]; then
+				WAKEUP_TIME=`expr ${UPDATE_EPG_TIME} - ${MARGIN_BOOT}`
+			fi
+		fi
 		if `date -d @${WAKEUP_TIME} +%s > ${WAKEALARM}`; then
 			echo "[`date +"${DATE_FORMAT}"`] ${0}: set the next wake up time at `date -d @${WAKEUP_TIME} "${DATE_FORMAT}"`" 1>&2
 		else
