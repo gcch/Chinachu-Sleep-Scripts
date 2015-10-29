@@ -37,7 +37,6 @@ fi
 # variables: scripts
 BIN_PATH="/usr/local/bin"
 PY_SCRIPTS="chinachu-api-get-connected-count chinachu-api-get-next-time chinachu-api-is-recording"
-GET_NEAREST_TIME_SCRIPT="get-nearest-future-time"
 CHECK_STATUS_SCRIPT="chinachu-check-status"
 
 # variables: pm-utils
@@ -60,6 +59,7 @@ read USER_INPUT
 USER_INPUT=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
 if [ ${USER_INPUT} -eq 0 ]; then
 	echo pm-utils is selected.
+	cp ${SYSTEMD_SLEEP_SCRIPT} ${PM_SLEEP_SCRIPT}
 	SLEEP_PATH="${PM_SLEEP_PATH}"
 	SLEEP_SCRIPT="${PM_SLEEP_SCRIPT}"
 	SLEEP_CMD="${PM_SLEEP_CMD}"
@@ -74,7 +74,6 @@ fi
 
 # duplicate
 cp ${SLEEP_SCRIPT}.sh ${SLEEP_SCRIPT}
-cp ${GET_NEAREST_TIME_SCRIPT}.sh ${GET_NEAREST_TIME_SCRIPT}
 cp ${CHECK_STATUS_SCRIPT}.sh ${CHECK_STATUS_SCRIPT}
 for s in ${PY_SCRIPTS}; do
 	cp ${s}.py ${s}
