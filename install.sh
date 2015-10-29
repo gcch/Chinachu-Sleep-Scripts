@@ -38,8 +38,6 @@ fi
 BIN_PATH="/usr/local/bin"
 PY_SCRIPTS="chinachu-api-get-connected-count chinachu-api-get-next-time chinachu-api-is-recording"
 CHECK_STATUS_SCRIPT="chinachu-check-status"
-
-# variable: sleep-script
 SLEEP_SCRIPT_ORG="chinachu-sleep"
 
 # variables: pm-utils
