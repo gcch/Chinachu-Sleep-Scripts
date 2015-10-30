@@ -96,7 +96,7 @@ function prepare-to-sleep() {
 		fi
 	fi
 
-	echo "try to set a wakeup alarm (${WAKEUP_TIME})" 1>&2
+	echo "try to set an wakeup alarm (${WAKEUP_TIME})" 1>&2
 	echo 0 > ${WAKEALARM}
 	if `echo ${WAKEUP_TIME} > ${WAKEALARM}`; then
 		echo "[`date +"${DATE_FORMAT}"`] ${0}: set the next wake up time at `date -d @${WAKEUP_TIME} +"${DATE_FORMAT}"`" 1>&2
