@@ -126,17 +126,26 @@ echo "applied: ${USER_INPUT}"
 
 # setup cron for updating epg
 CRON_FILE="/var/spool/cron/root"
-USER_INPUT=( ${USER_INPUT} )
-CRON_JOB="/home/chinachu_dtv/chinachu/chinachu update -f"
+CRON_SCHEDULE=( ${USER_INPUT} )
+
+echo "Path of Chinachu installed directory (e.g., /home/<username>/chinachu):"
+read USER_INPUT
+USER_INPUT=`echo ${USER_INPUT} | sed -e "s|^\(.*\) *#.*$|\1|"`
+CRON_JOB="${USER_INPUT}/chinachu update -f"
+echo "applied: ${USER_INPUT}"
+
+# setup cron for updating epg: delete old entries
 if [ `grep "${CRON_JOB//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ]; then
 	:
 else
 	sed -i -e "s|^.*${CRON_JOB}.*$||g" ${CRON_FILE}
 	sed -i '/^\s*$/d' ${CRON_FILE}
 fi
-for (( I = 0; I < ${#USER_INPUT[@]}; I++)); do
-	HOUR=`date -d ${USER_INPUT[$I]} +%H`
-	MIN=`date -d ${USER_INPUT[$I]} +%M`
+
+# setup cron for updating epg: create new entries
+for (( I = 0; I < ${#CRON_SCHEDULE[@]}; I++)); do
+	HOUR=`date -d ${CRON_SCHEDULE[$I]} +%H`
+	MIN=`date -d ${CRON_SCHEDULE[$I]} +%M`
 	CRON_ENTRY="$((10#${MIN})) $((10#${HOUR})) * * * ${CRON_JOB}"
 	echo "${CRON_ENTRY}" >> "${CRON_FILE}"
 done
