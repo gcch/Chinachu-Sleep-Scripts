@@ -26,7 +26,7 @@ SCHEDULE_UPDATE_EPG="05:55"
 function get-nearest-future-time() {
 	# check the number of arguments
 	if [ $# -le 0 ]; then
-		echo "usage: $0 <time1> (<time2> ...)"
+		echo "usage: $0 <time1> (<time2> ...)" 1>&2
 		exit 1
 	fi
 
@@ -36,7 +36,7 @@ function get-nearest-future-time() {
 		shift
 	done
 	_SCHEDULE=( ${_SCHEDULE} )
-	#echo ${_SCHEDULE[@]}
+	#echo ${_SCHEDULE[@]} 1>&2
 
 	# current date
 	_NOW=`date +%s`
@@ -82,16 +82,24 @@ function get-nearest-future-time() {
 # ------------------------------------------------------- #
 
 function prepare-to-sleep() {
+	# get the start time of the next reserved program
 	NEXT_PROG_START_TIME=`${CMD_CHINACHU_API_GET_NEXT_TIME} ${CHINACHU_URL}`
+	echo "NEXT_PROG_START_TIME: `date -d @${NEXT_PROG_START_TIME} +"${DATE_FORMAT}"` (${NEXT_PROG_START_TIME})" 1>&2
+	# get the time of the periodic epg update
 	UPDATE_EPG_TIME=`get-nearest-future-time ${SCHEDULE_UPDATE_EPG}`
+	echo "UPDATE_EPG_TIME: `date -d @${UPDATE_EPG_TIME} +"${DATE_FORMAT}"` (${UPDATE_EPG_TIME})" 1>&2
+
 	WAKEUP_TIME=`expr ${NEXT_PROG_START_TIME} - ${MARGIN_BOOT}`
-	if [ "${UPDATE_EPG_TIME}" -ne "" ]; then
+	if [ -n "${UPDATE_EPG_TIME}" ]; then
 		if [ ${NEXT_PROG_START_TIME} -gt ${UPDATE_EPG_TIME} ]; then
 			WAKEUP_TIME=`expr ${UPDATE_EPG_TIME} - ${MARGIN_BOOT}`
 		fi
 	fi
-	if `date -d @${WAKEUP_TIME} +%s > ${WAKEALARM}`; then
-		echo "[`date +"${DATE_FORMAT}"`] ${0}: set the next wake up time at `date -d @${WAKEUP_TIME} "${DATE_FORMAT}"`" 1>&2
+
+	echo "try to set a wakeup alarm (${WAKEUP_TIME})" 1>&2
+	echo 0 > ${WAKEALARM}
+	if `echo ${WAKEUP_TIME} > ${WAKEALARM}`; then
+		echo "[`date +"${DATE_FORMAT}"`] ${0}: set the next wake up time at `date -d @${WAKEUP_TIME} +"${DATE_FORMAT}"`" 1>&2
 	else
 		echo "[`date +"${DATE_FORMAT}"`] ${0}: failure to schedule" 1>&2
 	fi
@@ -109,25 +117,31 @@ function initialize-after-wakeup() {
 # ------------------------------------------------------- #
 
 # for pm-utils
-if [ $# -eq 1 ]; then
-	case ${1} in
-		hibernate|suspend)
-			prepare-to-sleep
-		;;
-		thaw|resume)
-			initialize-after-wakeup
-		;;
-	esac
-fi
+case ${1} in
+	hibernate|suspend)
+		prepare-to-sleep
+	;;
+	thaw|resume)
+		initialize-after-wakeup
+	;;
+esac
 
 # for systemd
-if [ $# -eq 2 ]; then
-	case ${1}/${2} in
-		pre/*)
-			prepare-to-sleep
-		;;
-		post/*)
-			initialize-after-wakeup
-		;;
-	esac
-fi
+case ${1}/${2} in
+	pre/*)
+		prepare-to-sleep
+	;;
+	post/*)
+		initialize-after-wakeup
+	;;
+esac
+
+# for test
+case ${1} in
+        test1)
+                prepare-to-sleep
+        ;;
+        test2)
+                initialize-after-wakeup
+ 	;;
+esac
