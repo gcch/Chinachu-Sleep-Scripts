@@ -130,7 +130,7 @@ CRON_SCHEDULE=( ${USER_INPUT} )
 
 echo "Path of Chinachu installed directory (e.g., /home/<username>/chinachu):"
 read USER_INPUT
-USER_INPUT=`echo ${USER_INPUT} | sed -e "s|^\(.*\) *#.*$|\1|"`
+USER_INPUT=`echo ${USER_INPUT} | sed -e "s|^\(.*\) .*#.*$|\1|"`
 CRON_JOB="${USER_INPUT}/chinachu update -f"
 echo "applied: ${USER_INPUT}"
 
