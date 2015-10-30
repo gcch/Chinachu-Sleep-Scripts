@@ -127,7 +127,7 @@ echo "applied: ${USER_INPUT}"
 # setup cron for updating epg
 CRON_FILE="/var/spool/cron/root"
 USER_INPUT=( ${USER_INPUT} )
-CRON_JOB="/home/chinachu_dtv/chinachu/chinachu update -f; /usr/sbin/pm-hibernate"
+CRON_JOB="/home/chinachu_dtv/chinachu/chinachu update -f"
 if [ `grep "${CRON_JOB//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ]; then
 	:
 else
