@@ -2,26 +2,29 @@
 
 # ------------------------------------------------------- #
 #
-# /etc/pm/sleep.d/81chinachu-sleep
-# /usr/lib/systemd/system-sleep/chinachu-sleep
+# chinachu-sleep.sh
 #
 # Copyright (c) 2015 tag
 #
 # ------------------------------------------------------- #
 
+
+# ======================================================= #
+
 # environment
 PATH=${PATH}
-WAKEALARM=/sys/class/rtc/rtc0/wakealarm
 DATE_FORMAT="%Y-%m-%d %T"
+
 TMP_SLEEP="/var/tmp/.chinachu-sleep"
+WAKEALARM="/sys/class/rtc/rtc0/wakealarm"
 CMD_CHINACHU_API_GET_NEXT_TIME="/usr/local/bin/chinachu-api-get-next-time"
 
 # variables
-CHINACHU_URL="http://localhost:10772"
-MARGIN_BOOT=600
-SCHEDULE_UPDATE_EPG="05:55"
+CHINACHU_URL="http://localhost:20772"
+ROOM_BEFORE_REC="600"
+UPDATE_EPG_SCHEDULE="0:00, 05:05, 23:59"
 
-# ------------------------------------------------------- #
+# ======================================================= #
 
 function get-nearest-future-time() {
 	# check the number of arguments
@@ -86,13 +89,13 @@ function prepare-to-sleep() {
 	NEXT_PROG_START_TIME=`${CMD_CHINACHU_API_GET_NEXT_TIME} ${CHINACHU_URL}`
 	echo "NEXT_PROG_START_TIME: `date -d @${NEXT_PROG_START_TIME} +"${DATE_FORMAT}"` (${NEXT_PROG_START_TIME})" 1>&2
 	# get the time of the periodic epg update
-	UPDATE_EPG_TIME=`get-nearest-future-time ${SCHEDULE_UPDATE_EPG}`
+	UPDATE_EPG_TIME=`get-nearest-future-time ${UPDATE_EPG_SCHEDULE}`
 	echo "UPDATE_EPG_TIME: `date -d @${UPDATE_EPG_TIME} +"${DATE_FORMAT}"` (${UPDATE_EPG_TIME})" 1>&2
 
-	WAKEUP_TIME=`expr ${NEXT_PROG_START_TIME} - ${MARGIN_BOOT}`
+	WAKEUP_TIME=`expr ${NEXT_PROG_START_TIME} - ${ROOM_BEFORE_REC}`
 	if [ -n "${UPDATE_EPG_TIME}" ]; then
 		if [ ${NEXT_PROG_START_TIME} -gt ${UPDATE_EPG_TIME} ]; then
-			WAKEUP_TIME=`expr ${UPDATE_EPG_TIME} - ${MARGIN_BOOT}`
+			WAKEUP_TIME=`expr ${UPDATE_EPG_TIME} - ${ROOM_BEFORE_REC}`
 		fi
 	fi
 
@@ -145,3 +148,5 @@ case ${1} in
                 initialize-after-wakeup
  	;;
 esac
+
+exit 0
