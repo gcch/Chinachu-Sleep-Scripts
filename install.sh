@@ -11,11 +11,11 @@
 
 # ======================================================= #
 
-# dir path (don't change!)
+# dir path (shouldn't change)
 BIN_INST_PATH="/usr/local/bin"
 CRON_DIR="/var/spool/cron"
 
-# for getting the wake up time form sleep
+# for getting the wake up time from sleep
 TMP_SLEEP="/var/tmp/.chinachu-sleep"
 
 # scripts
