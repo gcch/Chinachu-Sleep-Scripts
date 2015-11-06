@@ -8,16 +8,21 @@
 #
 # ------------------------------------------------------- #
 
+
+# ======================================================= #
+
 # environment
 PATH=${PATH}
 DATE_FORMAT="%Y-%m-%d %T"
 
-# variables
-CHINACHU_URL="http://localhost:10772"
-MARGIN_UPTIME=600
-MARGIN_SLEEP=1800
+TMP_SLEEP="/var/tmp/.chinachu-sleep"
 
-# ------------------------------------------------------- #
+# variables
+CHINACHU_URL="http://localhost:20772"
+PERIOD_NOT_GO_INTO_SLEEP_AFTER_BOOT="900"
+PERIOD_NOT_GO_INTO_SLEEP_BEFORE_REC="3600"
+
+# ======================================================= #
 
 # check the status of Chinachu: connected count
 if [ `chinachu-api-get-connected-count ${CHINACHU_URL}` -gt 0 ]; then
@@ -38,7 +43,7 @@ fi
 # check the status of Chinachu: is Chinachu waiting for the next recording
 NOW=`date +%s`
 NEXT=`chinachu-api-get-next-time ${CHINACHU_URL}`
-BORDER=$((${NEXT} - ${MARGIN_SLEEP}))
+BORDER=$((${NEXT} - ${PERIOD_NOT_GO_INTO_SLEEP_BEFORE_REC}))
 if [ ${NOW} -gt ${BORDER} ]; then
 	echo "[`date +"${DATE_FORMAT}"`] ${0}: Chinachu is waiting for the next recording. (next: `date -d @${NEXT} +"${DATE_FORMAT}"`)" 1>&2
 	exit 1
@@ -49,7 +54,7 @@ fi
 # check the uptime
 NOW=`date +%s`
 UPTIME=`uptime -s | date -f - +%s`
-BORDER=$((${UPTIME} + ${MARGIN_UPTIME}))
+BORDER=$((${UPTIME} + ${PERIOD_NOT_GO_INTO_SLEEP_AFTER_BOOT}))
 if [ ${NOW} -lt ${BORDER} ]; then
 	echo "[`date +"${DATE_FORMAT}"`] ${0}: It has not elapsed only a few minutes from a boot. (uptime: `date -d @${UPTIME} +"${DATE_FORMAT}"`)" 1>&2
 	exit 1
@@ -58,11 +63,10 @@ fi
 # ------------------------------------------------------- #
 
 # check the time from waking up from sleep
-TMP_SLEEP="/var/tmp/.chinachu-sleep"
 if [ -f ${TMP_SLEEP} ]; then
 	NOW=`date +%s`
 	WAKEUPTIME=`stat -c %y ${TMP_SLEEP} | date -f - +%s`
-	BORDER=$((${WAKEUPTIME} + ${MARGIN_UPTIME}))
+	BORDER=$((${WAKEUPTIME} + ${PERIOD_NOT_GO_INTO_SLEEP_AFTER_BOOT}))
 	if [ ${NOW} -lt ${BORDER} ]; then
 		echo "[`date +"${DATE_FORMAT}"`] ${0}: It has not elapsed only a few minutes from waking up from sleep. (wakeuptime: `date -d @${WAKEUPTIME} +"${DATE_FORMAT}"`)" 1>&2
 		exit 1
