@@ -194,7 +194,7 @@ function get-update-epg-schedule() {
 	echo "Updating epg sechedule (e.g., ${UPDATE_EPG_SCHEDULE}):"
 	read USER_INPUT
 	USER_INPUT=( `echo ${USER_INPUT} | tr -s "," " "` )
-	for (( I = 0; I < ${#USER_INPUT[@]}; I++)); do
+	for (( I = 0; I < ${#USER_INPUT[@]}; I++ )); do
 		TMP="`echo ${USER_INPUT[$I]} | grep -e "^[0-1]\{0,1\}[0-9]:[0-5]\{0,1\}[0-9]$" -e "^2[0-3]:[0-5]\{0,1\}[0-9]$"` ${TMP}"
 	done
 	TMP=( `echo ${TMP} | sed -e "s/  */ /g"` )
