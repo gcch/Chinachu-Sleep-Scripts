@@ -72,7 +72,6 @@ Linux についてわからないことだらけであることもあって、�
     <dd>Chinachu 録画状態取得スクリプト<br />
         引数として、Chinachu WUI の URL を渡す必要あり。<br />
         録画中であるとき、正常終了 (0) となる。</dd>
-
 </dl>
 
 ### About settings
@@ -84,13 +83,14 @@ Linux についてわからないことだらけであることもあって、�
 設定項目:
 
     0                           # 電源管理の方法 (0: pm-utils / 1: systemd)
+    chinachu                    # Chianchu をインストールしたユーザ (正確には、EPG 取得用 cron を実行するユーザ)
+    /home/chinachu/chinachu     # Chinachu のインストールディレクトリ
     http://localhost:20772      # Chinachu WUI のアドレス (最後に "/" はつけないこと。認証なしの wuiOpenPort じゃないとダメ。)
+    10                          # スリープ移行チェック (cron) を実行する周期 [分]
     600                         # スリープ状態から起動する際、録画開始よりどの程度前に起動するか [秒]
     900                         # 起動後、スリープに移行しない期間 [秒]
     3600                        # 次の録画が迫っている場合、どの程度の時間なら起動したまま待たせるか [秒]
     5:55                        # EPG 取得を行う時刻 (スペース or カンマ区切りで複数指定可能)
-    /home/chinachu/chinachu     # Chinachu のインストールディレクトリ
-    10                          # スリープ移行チェック (cron) を実行する周期 [分]
 
 
 ## Usage
