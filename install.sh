@@ -58,7 +58,7 @@ function check-command() {
 # ======================================================= #
 
 function take-over-path() {
-	echo "Taking over PATH..."
+#	echo "Taking over PATH..."
 	while [ "${1}" != "" ]; do
 		sed -i -e "s|^\(PATH=\).*$|\1${PATH}|" ${1}
 		shift
