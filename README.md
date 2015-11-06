@@ -147,6 +147,15 @@ pm-utils のインストール
 で、おしまい。
 設定を変えたいときは、もう一度インストールをすればいい。
 
+動作確認は、下記コマンドを実行してみて、エラーがなく動作していればスクリプト自体は問題ない。
+最終的には、マシンが勝手にスリープし、録画前 or EPG 取得時刻前に自動起動すれば OK かと。
+
+    # /etc/pm/sleep.d/81chinachu-sleep test1               # スリープ時の動作テスト (pm-utils)
+    # /etc/pm/sleep.d/81chinachu-sleep test2               # スリープ回復時の動作テスト (pm-utils)
+    # /usr/lib/systemd/system-sleep/chinachu-sleep test1   # スリープ時の動作テスト (systemd)
+    # /usr/lib/systemd/system-sleep/chinachu-sleep test2   # スリープ回復時の動作テスト (systemd)
+    # chinachu-check-status                                # スリープ移行可能状態チェック
+
 ---
 
 SSH 経由の sudo だと、PATH が引き継がれず、Python 3.x をインストールしていても、「そんなのない！」と言われる場合があります。
