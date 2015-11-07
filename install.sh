@@ -334,7 +334,7 @@ function setup-cron-for-updating-epg() {
 	fi
 
 	# setup cron for updating epg: create new entries
-	for (( I = 0; I < ${#CRON_SCHEDULE[@]}; I++)); do
+	for (( I = 0; I < ${#CRON_SCHEDULE[@]}; I++ )); do
 		HOUR=`date -d ${CRON_SCHEDULE[$I]} +%H`
 		MIN=`date -d ${CRON_SCHEDULE[$I]} +%M`
 		CRON_ENTRY="$((10#${MIN})) $((10#${HOUR})) * * * ${CRON_JOB}"
