@@ -81,7 +81,7 @@ function select-sleep-manager() {
 	echo "[0] pm-utils"
 	echo "[1] systemd"
 	read USER_INPUT
-	USER_INPUT=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
+	USER_INPUT=`echo "${USER_INPUT}" | sed -e "s|\([0-9]*\).*#.*$|\1|"`
 
 	case ${USER_INPUT} in
 		0)
@@ -108,7 +108,7 @@ function select-sleep-manager() {
 function get-chinachu-url() {
 	echo "Chinachu URL (e.g., ${CHUNACHU_URL}):"
 	read USER_INPUT
-	CHINACHU_URL=`echo ${USER_INPUT} | sed -e "s|^\(http://.*:[0-9]*\).*#.*$|\1|"`
+	CHINACHU_URL=`echo "${USER_INPUT}" | sed -e "s|^\(http://.*:[0-9]*\).*#.*$|\1|"`
 }
 
 function apply-chinachu-url() {
@@ -123,7 +123,7 @@ function apply-chinachu-url() {
 function get-chinachu-user() {
 	echo "Chinachu installation user (e.g., ${CHINACHU_USER}):"
 	read USER_INPUT
-	CHINACHU_USER=`echo ${USER_INPUT} | sed -e "s|^\(.*\) .*#.*$|\1|"`
+	CHINACHU_USER=`echo "${USER_INPUT}" | sed -e "s|^\(.*\) .*#.*$|\1|"`
 }
 
 # ------------------------------------------------------- #
@@ -132,7 +132,7 @@ function get-chinachu-dir() {
 	CHINACHU_DIR="/home/${CHINACHU_USER}/chinachu"
 	echo "Path of Chinachu installed directory (e.g., ${CHINACHU_DIR}):"
 	read USER_INPUT
-	CHINACHU_DIR=`echo ${USER_INPUT} | sed -e "s|^\(.*\) .*#.*$|\1|"`
+	CHINACHU_DIR=`echo "${USER_INPUT}" | sed -e "s|^\(.*\) .*#.*$|\1|"`
 }
 
 # ------------------------------------------------------- #
@@ -140,7 +140,7 @@ function get-chinachu-dir() {
 function get-period-checking-status-to-sleep() {
 	echo "Period of checking status to sleep (e.g., ${PERIOD_CHECKING_STATUS_TO_SLEEP} [min.])"
 	read USER_INPUT
-	PERIOD_CHECKING_STATUS_TO_SLEEP=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
+	PERIOD_CHECKING_STATUS_TO_SLEEP=`echo "${USER_INPUT}" | sed -e "s|\([0-9]*\).*#.*$|\1|"`
 }
 
 # ------------------------------------------------------- #
@@ -148,7 +148,7 @@ function get-period-checking-status-to-sleep() {
 function get-room-before-recording() {
 	echo "Room between the next wake up and the next recording (e.g., ${ROOM_BEFORE_REC} [sec.]):"
 	read USER_INPUT
-	ROOM_BEFORE_REC=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
+	ROOM_BEFORE_REC=`echo "${USER_INPUT}" | sed -e "s|\([0-9]*\).*#.*$|\1|"`
 }
 
 function apply-room-before-recording() {
@@ -163,7 +163,7 @@ function apply-room-before-recording() {
 function get-period-not-go-into-sleep-after-boot() {
 	echo "Period to not go into sleep after starting up (e.g., ${PERIOD_NOT_GO_INTO_SLEEP_AFTER_BOOT} [sec.]):"
 	read USER_INPUT
-	PERIOD_NOT_GO_INTO_SLEEP_AFTER_BOOT=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
+	PERIOD_NOT_GO_INTO_SLEEP_AFTER_BOOT=`echo "${USER_INPUT}" | sed -e "s|\([0-9]*\).*#.*$|\1|"`
 }
 
 function apply-period-not-go-into-sleep-after-boot() {
@@ -178,7 +178,7 @@ function apply-period-not-go-into-sleep-after-boot() {
 function get-period-not-go-into-sleep-before-recording() {
 	echo "Period to not go into sleep before the next recording (e.g., ${PERIOD_NOT_GO_INTO_SLEEP_BEFORE_REC} [sec.]):"
 	read USER_INPUT
-	PERIOD_NOT_GO_INTO_SLEEP_BEFORE_REC=`echo ${USER_INPUT} | sed -e "s|\([0-9]*\).*#.*$|\1|"`
+	PERIOD_NOT_GO_INTO_SLEEP_BEFORE_REC=`echo "${USER_INPUT}" | sed -e "s|\([0-9]*\).*#.*$|\1|"`
 }
 
 function apply-period-not-go-into-sleep-before-recording() {
@@ -197,7 +197,7 @@ function get-update-epg-schedule() {
 	for (( I = 0; I < ${#USER_INPUT[@]}; I++ )); do
 		TMP="`echo ${USER_INPUT[$I]} | grep -e "^[0-1]\{0,1\}[0-9]:[0-5]\{0,1\}[0-9]$" -e "^2[0-3]:[0-5]\{0,1\}[0-9]$"` ${TMP}"
 	done
-	TMP=( `echo ${TMP} | sed -e "s/  */ /g"` )
+	TMP=( `echo "${TMP}" | sed -e "s/  */ /g"` )
 	UPDATE_EPG_SCHEDULE="${TMP}"
 }
 
@@ -228,9 +228,9 @@ function get-variables() {
 function install-chinachu-api-scripts() {
 	echo "Installing Chinachu API scripts..."
 	for S in ${CHINACHU_API_PYTHON_SCRIPTS}; do
-		cp ${S}.py ${S}
-		chmod +x ${S}
-		mv ${S} ${BIN_INST_PATH}
+		cp "${S}.py" "${S}"
+		chmod +x "${S}"
+		mv "${S}" "${BIN_INST_PATH}"
 	done
 }
 
@@ -240,7 +240,7 @@ function install-sleep-script() {
 	echo "Installing sleep-script..."
 
 #	echo "Duplicating..."
-	cp ${SLEEP_SCRIPT_ORG}.sh ${SLEEP_SCRIPT}
+	cp "${SLEEP_SCRIPT_ORG}.sh" "${SLEEP_SCRIPT}"
 
 #	echo "Applying user variables..."
 	TARGET="${SLEEP_SCRIPT}"
@@ -253,10 +253,10 @@ function install-sleep-script() {
 	apply-update-epg-schedule ${TARGET}
 
 #	echo "Changing authority..."
-	chmod +x ${SLEEP_SCRIPT}
+	chmod +x "${SLEEP_SCRIPT}"
 
 #	echo "Moving file..."
-	mv ${SLEEP_SCRIPT} ${SLEEP_PATH}
+	mv "${SLEEP_SCRIPT}" "${SLEEP_PATH}"
 }
 
 # ------------------------------------------------------- #
@@ -265,7 +265,7 @@ function install-check-chinachu-status() {
 	echo "Installing chinachu-check-status..."
 
 #	echo "Duplicating..."
-	cp ${CHECK_STATUS_SCRIPT}.sh ${CHECK_STATUS_SCRIPT}
+	cp "${CHECK_STATUS_SCRIPT}.sh" "${CHECK_STATUS_SCRIPT}"
 
 #	echo "Applying user variables..."
 	TARGET="${CHECK_STATUS_SCRIPT}"
@@ -278,10 +278,10 @@ function install-check-chinachu-status() {
 #	apply-update-epg-schedule ${TARGET}
 
 #	echo "Changing authority..."
-	chmod +x ${CHECK_STATUS_SCRIPT}
+	chmod +x "${CHECK_STATUS_SCRIPT}"
 
 #	echo "Moving file..."
-	mv ${CHECK_STATUS_SCRIPT} ${BIN_INST_PATH}
+	mv "${CHECK_STATUS_SCRIPT}" "${BIN_INST_PATH}"
 }
 
 # ======================================================= #
@@ -322,7 +322,7 @@ function setup-cron-for-updating-epg() {
 	if [ `grep "${CRON_JOB//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ]; then
 		echo "PATH=${PATH}" >> "${CRON_FILE}"
 	else
-		sed -i -e "s|^\(PATH=\).*$|\1${PATH}|" ${CRON_FILE}
+		sed -i -e "s|^\(PATH=\).*$|\1${PATH}|" "${CRON_FILE}"
 	fi
 
 	# setup cron for updating epg: delete old entries
@@ -356,7 +356,7 @@ function restart-cron() {
 		# for RHEL / CentOS Linux 7.x
 		systemctl restart crond.service
 	else
-		echo "please restart crond by yourself."
+		echo "Please restart crond by yourself."
 	fi
 }
 
