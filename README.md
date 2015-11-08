@@ -128,11 +128,11 @@ pm-utils のインストール
 
 クローン。
 
-    # git clone --depth 1 https://github.com/gcch/Chinachu-Sleep-Scripts.git
+    # git clone --depth 1 https://github.com/gcch/Chinachu-Sleep-Scripts.git ./chinachu-ss
 
 移動。
 
-    # cd Chinachu-Sleep-Scripts/
+    # cd chinachu-ss/
 
 設定ファイルを弄る。 (詳細は中身を参照。)
 
