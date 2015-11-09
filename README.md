@@ -156,7 +156,7 @@ pm-utils のインストール
     # /usr/lib/systemd/system-sleep/chinachu-sleep test2   # スリープ回復時の動作テスト (systemd)
     # chinachu-check-status                                # スリープ移行可能状態チェック
     # crontab -l                                           # cron への登録状況の確認 (スリープコマンド)
-    # crontab -l -u <chinachu-username>                    # cron への登録状況の確認 (EPG 取得コマンド)
+    # crontab -l -u <chinachu-username>                    # cron への登録状況の確認 (Chinachu の EPG 取得コマンド)
 
 ---
 
