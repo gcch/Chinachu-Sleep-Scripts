@@ -294,8 +294,9 @@ function setup-cron-for-sleep() {
 
 	# schedule & job
 	CRON_SCHEDULE="*/${PERIOD_CHECKING_STATUS_TO_SLEEP} * * * * "
-	CRON_JOB="${CRON_SCHEDULE}${BIN_INST_PATH}/${CHECK_STATUS_SCRIPT} && sleep 10 && ${SLEEP_CMD}"
+	CRON_JOB="${BIN_INST_PATH}/${CHECK_STATUS_SCRIPT} && sleep 10 && ${SLEEP_CMD}"
 
+	# delete old entries
 	if [ `grep "${BIN_INST_PATH//\\/\\\\}/${CHECK_STATUS_SCRIPT//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ]; then
 		:
 	else
@@ -303,7 +304,8 @@ function setup-cron-for-sleep() {
 		sed -i '/^\s*$/d' "${CRON_FILE}"
 	fi
 
-	echo "${CRON_JOB}" >> "${CRON_FILE}"
+	CRON_ENTRY="${CRON_SCHEDULE}${CRON_JOB}"
+	echo "${CRON_ENTRY}" >> "${CRON_FILE}"
 }
 
 # ------------------------------------------------------- #
