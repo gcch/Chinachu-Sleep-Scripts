@@ -321,7 +321,7 @@ function setup-cron-for-updating-epg() {
 	CRON_JOB="${CHINACHU_DIR}/chinachu update -f"
 
 	# take over path
-	if [ `grep "${CRON_JOB//\\/\\\\}" "${CRON_FILE}" | wc -l` -eq 0 ]; then
+	if [ `grep -e "^PATH=" "${CRON_FILE}" | wc -l` -eq 0 ]; then
 		echo "PATH=${PATH}" >> "${CRON_FILE}"
 	else
 		sed -i -e "s|^\(PATH=\).*$|\1${PATH}|" "${CRON_FILE}"
