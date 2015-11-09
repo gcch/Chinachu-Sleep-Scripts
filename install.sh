@@ -38,7 +38,7 @@ UPDATE_EPG_SCHEDULE="0:00, 05:05, 23:59"
 function check-run-as-root() {
 	echo "Checking this script is run as root..."
 	if [ "$UID" -ne 0 ]; then
-		echo "please run as root."
+		echo "error: Please run as root." 1>&2
 		exit 1
 	fi
 }
@@ -50,7 +50,7 @@ function check-command() {
 	if `type ${1} 1>/dev/null 2>/dev/null`; then
 		:
 	else
-		echo "${CMD} is not found."
+		echo "error: ${CMD} is not found." 1>&2
 		exit 1
 	fi
 }
@@ -97,7 +97,7 @@ function select-sleep-manager() {
 			SLEEP_CMD="/usr/bin/systemctl hibernate"
 		;;
 		*)
-			echo "error: Unknown input."
+			echo "error: Unknown input." 1>&2
 			select-sleep-manager
 		;;
 	esac
@@ -356,7 +356,7 @@ function restart-cron() {
 		# for RHEL / CentOS Linux 7.x
 		systemctl restart crond.service
 	else
-		echo "Please restart crond by yourself."
+		echo "error: Please restart crond by yourself." 1>&2
 	fi
 }
 
