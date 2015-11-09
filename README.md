@@ -161,7 +161,7 @@ pm-utils のインストール
 SSH 経由の sudo だと、PATH が引き継がれず、Python 3.x をインストールしていても、「そんなのない！」と言われる場合があります。
 
     $ sudo ./install.sh < settings
-    please install python 3.x.
+    python3 is not found.
 
 その時には、下記のように実行してみてください。
 
