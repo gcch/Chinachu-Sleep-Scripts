@@ -2,7 +2,7 @@
 chinachu		# User for Chianchu
 /home/chinachu/chinachu	# Directory where Chinachu is installed
 http://localhost:20772	# Chinachu URL
-15			# Period of running the cron [min.]
+5			# Period of running the cron [min.]
 600			# Room between the next wake up and the next recording [sec.]
 900			# Period to not go into sleep after waking up [sec.]
 3600			# Period to not go into sleep before the next recording [sec.]
