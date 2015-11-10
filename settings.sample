@@ -6,4 +6,4 @@ http://localhost:20772	# Chinachu URL
 600			# Room between the next wake up and the next recording [sec.]
 900			# Period to not go into sleep after waking up [sec.]
 3600			# Period to not go into sleep before the next recording [sec.]
-05:55                   # Times of updating EPG forcibly
+05:55 17:55             # Times of updating EPG forcibly
