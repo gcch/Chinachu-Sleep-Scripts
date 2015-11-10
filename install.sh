@@ -199,12 +199,13 @@ function apply-period-not-go-into-sleep-before-recording() {
 function get-update-epg-schedule() {
 	echo "Updating epg sechedule (e.g., ${UPDATE_EPG_SCHEDULE}):"
 	read USER_INPUT
-	USER_INPUT=( `echo ${USER_INPUT} | tr -s "," " "` )
+	USER_INPUT=`echo ${USER_INPUT} | sed -e "s|^\([0-9: ,]*\).*\#.*$|\1|"`
+	USER_INPUT=`echo ${USER_INPUT} | tr -s "," " "`
+	USER_INPUT=( ${USER_INPUT} )
 	for (( I = 0; I < ${#USER_INPUT[@]}; I++ )); do
-		TMP="`echo ${USER_INPUT[$I]} | grep -e "^[0-1]\{0,1\}[0-9]:[0-5]\{0,1\}[0-9]$" -e "^2[0-3]:[0-5]\{0,1\}[0-9]$"` ${TMP}"
+		TMP="`echo ${USER_INPUT[${I}]} | grep -e "^[0-1]\{0,1\}[0-9]:[0-5]\{0,1\}[0-9]$" -e "^2[0-3]:[0-5]\{0,1\}[0-9]$"` ${TMP}"
 	done
-	TMP=( `echo "${TMP}" | sed -e "s/  */ /g"` )
-	UPDATE_EPG_SCHEDULE="${TMP}"
+	UPDATE_EPG_SCHEDULE=( ${TMP} )
 	echo "input: ${UPDATE_EPG_SCHEDULE[@]}"
 }
 
