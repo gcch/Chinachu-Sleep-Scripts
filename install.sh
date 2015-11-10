@@ -124,7 +124,7 @@ function apply-chinachu-url() {
 function get-chinachu-user() {
 	echo "Chinachu installation user (e.g., ${CHINACHU_USER}):"
 	read USER_INPUT
-	CHINACHU_USER=`echo "${USER_INPUT}" | sed -e "s|^\(.*\) .*#.*$|\1|"`
+	CHINACHU_USER=`echo "${USER_INPUT}" | sed -e "s|^\([a-zA-Z\_0-9][a-zA-Z0-9\_\-]*\)[ \f\n\r\t]*#.*$|\1|"`
 	echo "input: ${CHINACHU_USER}"
 }
 
@@ -133,7 +133,7 @@ function get-chinachu-user() {
 function get-chinachu-dir() {
 	echo "Path of Chinachu installed directory (e.g., ${CHINACHU_DIR}):"
 	read USER_INPUT
-	CHINACHU_DIR=`echo "${USER_INPUT}" | sed -e "s|^\(.*\) .*#.*$|\1|"`
+	CHINACHU_DIR=`echo "${USER_INPUT}" | sed -e "s|^\([a-zA-Z0-9\/\_\-]*\)[ \f\n\r\t]*#.*$|\1|"`
 	echo "input: ${CHINACHU_DIR}"
 }
 
