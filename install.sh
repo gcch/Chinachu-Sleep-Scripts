@@ -25,7 +25,7 @@ CHECK_STATUS_SCRIPT="chinachu-check-status"
 
 # variables (sample)
 CHINACHU_USER="chinachu"
-CHINACHU_DIR="/home/${CHINACHU_USER}/chinachu"
+CHINACHU_DIR="/home/chinachu/chinachu"
 CHINACHU_URL="http://localhost:20772"
 PERIOD_CHECKING_STATUS_TO_SLEEP="15"
 ROOM_BEFORE_REC="600"
@@ -50,7 +50,7 @@ function check-command() {
 	if `type ${1} 1>/dev/null 2>/dev/null`; then
 		:
 	else
-		echo "error: ${CMD} is not found." 1>&2
+		echo "error: ${1} is not found." 1>&2
 		exit 1
 	fi
 }
@@ -106,7 +106,7 @@ function select-sleep-manager() {
 # ======================================================= #
 
 function get-chinachu-url() {
-	echo "Chinachu URL (e.g., ${CHUNACHU_URL}):"
+	echo "Chinachu URL (e.g., ${CHINACHU_URL}):"
 	read USER_INPUT
 	CHINACHU_URL=`echo "${USER_INPUT}" | sed -e "s|^\(http://.*:[0-9]*\).*#.*$|\1|"`
 }
@@ -129,7 +129,6 @@ function get-chinachu-user() {
 # ------------------------------------------------------- #
 
 function get-chinachu-dir() {
-	CHINACHU_DIR="/home/${CHINACHU_USER}/chinachu"
 	echo "Path of Chinachu installed directory (e.g., ${CHINACHU_DIR}):"
 	read USER_INPUT
 	CHINACHU_DIR=`echo "${USER_INPUT}" | sed -e "s|^\(.*\) .*#.*$|\1|"`
