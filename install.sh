@@ -203,7 +203,7 @@ function get-update-epg-schedule() {
 	USER_INPUT=`echo ${USER_INPUT} | tr -s "," " "`
 	USER_INPUT=( ${USER_INPUT} )
 	for (( I = 0; I < ${#USER_INPUT[@]}; I++ )); do
-		TMP="`echo ${USER_INPUT[${I}]} | grep -e "^[0-1]\{0,1\}[0-9]:[0-5]\{0,1\}[0-9]$" -e "^2[0-3]:[0-5]\{0,1\}[0-9]$"` ${TMP}"
+		TMP="${TMP} `echo ${USER_INPUT[${I}]} | grep -e "^[0-1]\{0,1\}[0-9]:[0-5]\{0,1\}[0-9]$" -e "^2[0-3]:[0-5]\{0,1\}[0-9]$"`"
 	done
 	UPDATE_EPG_SCHEDULE=( ${TMP} )
 	echo "input: ${UPDATE_EPG_SCHEDULE[@]}"
@@ -211,7 +211,7 @@ function get-update-epg-schedule() {
 
 function apply-update-epg-schedule() {
 	while [ "${1}" != "" ]; do
-		sed -i -e "s/^\(UPDATE_EPG_SCHEDULE=\).*$/\1\"${UPDATE_EPG_SCHEDULE}\"/" ${1}
+		sed -i -e "s|^\(UPDATE_EPG_SCHEDULE=\).*$|\1\"`echo ${UPDATE_EPG_SCHEDULE[@]}`\"|" ${1}
 		shift
 	done
 }
@@ -300,8 +300,7 @@ function setup-cron-for-sleep() {
 	# cron file
 	CRON_FILE="${CRON_DIR}/root"
 
-	# schedule & job
-	CRON_SCHEDULE="*/${PERIOD_CHECKING_STATUS_TO_SLEEP} * * * * "
+	# job
 	CRON_JOB="${BIN_INST_PATH}/${CHECK_STATUS_SCRIPT} && sleep 10 && ${SLEEP_CMD}"
 
 	# delete old entries
@@ -312,6 +311,7 @@ function setup-cron-for-sleep() {
 		sed -i '/^\s*$/d' "${CRON_FILE}"
 	fi
 
+	CRON_SCHEDULE="*/${PERIOD_CHECKING_STATUS_TO_SLEEP} * * * * "
 	CRON_ENTRY="${CRON_SCHEDULE}${CRON_JOB}"
 	echo "${CRON_ENTRY}" >> "${CRON_FILE}"
 }
@@ -324,8 +324,7 @@ function setup-cron-for-updating-epg() {
 	# cron file
 	CRON_FILE="${CRON_DIR}/${CHINACHU_USER}"
 
-	# schedule & job
-	CRON_SCHEDULE=( ${UPDATE_EPG_SCHEDULE} )
+	# job
 	CRON_JOB="${CHINACHU_DIR}/chinachu update -f"
 
 	# take over path
@@ -344,10 +343,11 @@ function setup-cron-for-updating-epg() {
 	fi
 
 	# setup cron for updating epg: create new entries
-	for (( I = 0; I < ${#CRON_SCHEDULE[@]}; I++ )); do
-		HOUR=`date -d ${CRON_SCHEDULE[$I]} +%H`
-		MIN=`date -d ${CRON_SCHEDULE[$I]} +%M`
-		CRON_ENTRY="$((10#${MIN})) $((10#${HOUR})) * * * ${CRON_JOB}"
+	for (( I = 0; I < ${#UPDATE_EPG_SCHEDULE[@]}; I++ )); do
+		HOUR=`date -d ${UPDATE_EPG_SCHEDULE[$I]} +%H`
+		MIN=`date -d ${UPDATE_EPG_SCHEDULE[$I]} +%M`
+		CRON_SCHEDULE="$((10#${MIN})) $((10#${HOUR})) * * * "
+		CRON_ENTRY="${CRON_SCHEDULE}${CRON_JOB}"
 		echo "${CRON_ENTRY}" >> "${CRON_FILE}"
 	done
 }
