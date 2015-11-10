@@ -109,6 +109,7 @@ function get-chinachu-url() {
 	echo "Chinachu URL (e.g., ${CHINACHU_URL}):"
 	read USER_INPUT
 	CHINACHU_URL=`echo "${USER_INPUT}" | sed -e "s|^\(http://.*:[0-9]*\).*#.*$|\1|"`
+	echo "input: ${CHINACHU_URL}"
 }
 
 function apply-chinachu-url() {
@@ -124,6 +125,7 @@ function get-chinachu-user() {
 	echo "Chinachu installation user (e.g., ${CHINACHU_USER}):"
 	read USER_INPUT
 	CHINACHU_USER=`echo "${USER_INPUT}" | sed -e "s|^\(.*\) .*#.*$|\1|"`
+	echo "input: ${CHINACHU_USER}"
 }
 
 # ------------------------------------------------------- #
@@ -132,6 +134,7 @@ function get-chinachu-dir() {
 	echo "Path of Chinachu installed directory (e.g., ${CHINACHU_DIR}):"
 	read USER_INPUT
 	CHINACHU_DIR=`echo "${USER_INPUT}" | sed -e "s|^\(.*\) .*#.*$|\1|"`
+	echo "input: ${CHINACHU_DIR}"
 }
 
 # ------------------------------------------------------- #
@@ -140,6 +143,7 @@ function get-period-checking-status-to-sleep() {
 	echo "Period of checking status to sleep (e.g., ${PERIOD_CHECKING_STATUS_TO_SLEEP} [min.])"
 	read USER_INPUT
 	PERIOD_CHECKING_STATUS_TO_SLEEP=`echo "${USER_INPUT}" | sed -e "s|\([0-9]*\).*#.*$|\1|"`
+	echo "input: ${PERIOD_CHECKING_STATUS_TO_SLEEP}"
 }
 
 # ------------------------------------------------------- #
@@ -148,6 +152,7 @@ function get-room-before-recording() {
 	echo "Room between the next wake up and the next recording (e.g., ${ROOM_BEFORE_REC} [sec.]):"
 	read USER_INPUT
 	ROOM_BEFORE_REC=`echo "${USER_INPUT}" | sed -e "s|\([0-9]*\).*#.*$|\1|"`
+	echo "input: ${ROOM_BEFORE_REC}"
 }
 
 function apply-room-before-recording() {
@@ -163,6 +168,7 @@ function get-period-not-go-into-sleep-after-boot() {
 	echo "Period to not go into sleep after starting up (e.g., ${PERIOD_NOT_GO_INTO_SLEEP_AFTER_BOOT} [sec.]):"
 	read USER_INPUT
 	PERIOD_NOT_GO_INTO_SLEEP_AFTER_BOOT=`echo "${USER_INPUT}" | sed -e "s|\([0-9]*\).*#.*$|\1|"`
+	echo "input: ${PERIOD_NOT_GO_INTO_SLEEP_AFTER_BOOT}"
 }
 
 function apply-period-not-go-into-sleep-after-boot() {
@@ -178,6 +184,7 @@ function get-period-not-go-into-sleep-before-recording() {
 	echo "Period to not go into sleep before the next recording (e.g., ${PERIOD_NOT_GO_INTO_SLEEP_BEFORE_REC} [sec.]):"
 	read USER_INPUT
 	PERIOD_NOT_GO_INTO_SLEEP_BEFORE_REC=`echo "${USER_INPUT}" | sed -e "s|\([0-9]*\).*#.*$|\1|"`
+	echo "input: ${PERIOD_NOT_GO_INTO_SLEEP_BEFORE_REC}"
 }
 
 function apply-period-not-go-into-sleep-before-recording() {
@@ -198,6 +205,7 @@ function get-update-epg-schedule() {
 	done
 	TMP=( `echo "${TMP}" | sed -e "s/  */ /g"` )
 	UPDATE_EPG_SCHEDULE="${TMP}"
+	echo "input: ${UPDATE_EPG_SCHEDULE[@]}"
 }
 
 function apply-update-epg-schedule() {
