@@ -1,4 +1,4 @@
-# Chinachu Sleep Scripts
+# Chinachu Sleep Scripts (β)
 
 ## Overview
 Chinachu サーバをスリープさせる際に必要なスクリプトと Chinachu REST API 経由で (一部の必要な) 情報を取得するスクリプト、そしてこれらを導入するためのスクリプトをまとめたもの。
