@@ -28,18 +28,16 @@ Chinachu サーバをスリープさせる際に必要なスクリプトと Chin
 起動および復帰後に Chinachu の機能により EPG 取得が行われるため、指定時刻より前に取得が開始される。)
 
 
-
 ## Testing environment
-マシンは放置されていた EPSON Endeavor ST125E (Core 2 Duo P8700, 4GB RAM)。全く関係ない話だけど、エンコ能力が皆無に等しいので (放送波のリアルタイムノーエンコード以外の) ストリーミングは無理。
+マシンは長らく部屋で放置されていた EPSON Endeavor ST125E (Core 2 Duo P8700, 4GB RAM)。
 
 そして OS は CentOS 7 (x86-64)。
 
     $ cat /etc/centos-release
     CentOS Linux release 7.1.1503 (Core)
 
-Minimal でインストールしたけど、いろいろと入れたのでもうよくわかんない。
-
-また、別の環境の場合は、適当に読み替えてください。
+別の環境 (Debian, Ubuntu, ...) の場合は、適当に読み替えてください。
+恐らくは問題ないと思うのですが……。
 
 
 ## Components
