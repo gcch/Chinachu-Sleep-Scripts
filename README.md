@@ -7,7 +7,7 @@ Chinachu サーバをスリープさせる際に必要なスクリプトと Chin
 
 
 ## Description
-世界で一番キュートな録画システム [Chinachu](https://chinachu.moe/) ([GitHub](https://github.com/kanreisa/Chinachu)) の動作状況に合わせて、 PC をハイバネートするスクリプト群とこれらのスクリプト軍を導入するスクリプトをまとめたもの。
+世界で一番キュートな録画システム [Chinachu](https://chinachu.moe/) ([GitHub](https://github.com/kanreisa/Chinachu)) の動作状況に合わせて、 PC をハイバネートするスクリプト群とこれらのスクリプト群を導入するスクリプトをまとめたもの。
 
 より具体的な動作としては、cron で chinachu-check-status を走らせ、
 
