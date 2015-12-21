@@ -106,7 +106,7 @@ function prepare-to-sleep() {
 	else
 		echo "[`date +"${DATE_FORMAT}"`] ${0}: failure to schedule" 1>&2
 	fi
-	echo "This system will be stop soon."
+	echo "This system will be stopped soon."
 }
 
 # ------------------------------------------------------- #
