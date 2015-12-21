@@ -43,6 +43,10 @@ fi
 # check the status of Chinachu: is Chinachu waiting for the next recording
 NOW=`date +%s`
 NEXT=`chinachu-api-get-next-time ${CHINACHU_URL}`
+if [ "${NEXT}" = "" ]; then
+	echo "[`date +"${DATE_FORMAT}"`] ${0}: Chinachu has no next recording program." 1>&2
+	exit 0
+fi
 BORDER=$((${NEXT} - ${PERIOD_NOT_GO_INTO_SLEEP_BEFORE_REC}))
 if [ ${NOW} -gt ${BORDER} ]; then
 	echo "[`date +"${DATE_FORMAT}"`] ${0}: Chinachu is waiting for the next recording. (next: `date -d @${NEXT} +"${DATE_FORMAT}"`)" 1>&2
