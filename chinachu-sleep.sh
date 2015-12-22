@@ -92,11 +92,19 @@ function prepare-to-sleep() {
 	UPDATE_EPG_TIME=`get-nearest-future-time ${UPDATE_EPG_SCHEDULE}`
 	echo "UPDATE_EPG_TIME: `date -d @${UPDATE_EPG_TIME} +"${DATE_FORMAT}"` (${UPDATE_EPG_TIME})" 1>&2
 
-	WAKEUP_TIME=`expr ${NEXT_PROG_START_TIME} - ${ROOM_BEFORE_REC}`
-	if [ -n "${UPDATE_EPG_TIME}" ]; then
-		if [ ${NEXT_PROG_START_TIME} -gt ${UPDATE_EPG_TIME} ]; then
+	if [ -z "${UPDATE_EPG_TIME}" ]; then
+		echo "unknown error: failure to get UPDATE_EPG_TIME"
+		exit 1
+	fi
+
+	if [ -n "${NEXT_PROG_START_TIME}" ]; then
+		if [ ${NEXT_PROG_START_TIME} -lt ${UPDATE_EPG_TIME} ]; then
+			WAKEUP_TIME=`expr ${NEXT_PROG_START_TIME} - ${ROOM_BEFORE_REC}`
+		else
 			WAKEUP_TIME=`expr ${UPDATE_EPG_TIME} - ${ROOM_BEFORE_REC}`
 		fi
+	else
+		WAKEUP_TIME=`expr ${UPDATE_EPG_TIME} - ${ROOM_BEFORE_REC}`
 	fi
 
 	echo "try to set an wakeup alarm (${WAKEUP_TIME})" 1>&2
