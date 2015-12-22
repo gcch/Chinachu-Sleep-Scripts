@@ -92,9 +92,9 @@ function prepare-to-sleep() {
 	UPDATE_EPG_TIME=`get-nearest-future-time ${UPDATE_EPG_SCHEDULE}`
 	echo "UPDATE_EPG_TIME: `date -d @${UPDATE_EPG_TIME} +"${DATE_FORMAT}"` (${UPDATE_EPG_TIME})" 1>&2
 
-	if [ -z "${UPDATE_EPG_TIME}" ]; then
-		echo "unknown error: failure to get UPDATE_EPG_TIME"
-		exit 1
+	if [ -z "${NEXT_PROG_START_TIME}" ] && [ -z "${UPDATE_EPG_TIME}" ]; then
+		echo "This system will be stop without scheduling next wakeup"
+		exit 0
 	fi
 
 	if [ -n "${NEXT_PROG_START_TIME}" ]; then
