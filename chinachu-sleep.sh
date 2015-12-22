@@ -87,10 +87,19 @@ function get-nearest-future-time() {
 function prepare-to-sleep() {
 	# get the start time of the next reserved program
 	NEXT_PROG_START_TIME=`${CMD_CHINACHU_API_GET_NEXT_TIME} ${CHINACHU_URL}`
-	echo "NEXT_PROG_START_TIME: `date -d @${NEXT_PROG_START_TIME} +"${DATE_FORMAT}"` (${NEXT_PROG_START_TIME})" 1>&2
+	if [ -n "${NEXT_PROG_START_TIME}" ]; then
+		echo "NEXT_PROG_START_TIME: `date -d @${NEXT_PROG_START_TIME} +"${DATE_FORMAT}"` (${NEXT_PROG_START_TIME})" 1>&2
+	else 
+		echo "NEXT_PROG_START_TIME: empty" 1>&2
+	fi
+
 	# get the time of the periodic epg update
 	UPDATE_EPG_TIME=`get-nearest-future-time ${UPDATE_EPG_SCHEDULE}`
-	echo "UPDATE_EPG_TIME: `date -d @${UPDATE_EPG_TIME} +"${DATE_FORMAT}"` (${UPDATE_EPG_TIME})" 1>&2
+	if [ -n "${UPDATE_EPG_TIME}" ]; then
+		echo "UPDATE_EPG_TIME: `date -d @${UPDATE_EPG_TIME} +"${DATE_FORMAT}"` (${UPDATE_EPG_TIME})" 1>&2
+	else
+		echo "UPDATE_EPG_TIME: empty" 1>&2
+	fi
 
 	if [ -z "${NEXT_PROG_START_TIME}" ] && [ -z "${UPDATE_EPG_TIME}" ]; then
 		echo "This system will be stop without scheduling next wakeup"
