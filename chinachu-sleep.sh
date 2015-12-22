@@ -94,6 +94,7 @@ function prepare-to-sleep() {
 
 	if [ -z "${NEXT_PROG_START_TIME}" ] && [ -z "${UPDATE_EPG_TIME}" ]; then
 		echo "This system will be stop without scheduling next wakeup"
+		echo 0 > ${WAKEALARM}
 		exit 0
 	fi
 
