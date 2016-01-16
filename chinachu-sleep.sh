@@ -161,7 +161,7 @@ esac
 case ${1} in
 	test1)
 		prepare-to-sleep
-        ;;
+	;;
 	test2)
 		initialize-after-wakeup
 	;;
