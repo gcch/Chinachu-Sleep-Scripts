@@ -159,12 +159,12 @@ esac
 
 # for test
 case ${1} in
-        test1)
-                prepare-to-sleep
+	test1)
+		prepare-to-sleep
         ;;
-        test2)
-                initialize-after-wakeup
- 	;;
+	test2)
+		initialize-after-wakeup
+	;;
 esac
 
 exit 0
