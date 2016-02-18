@@ -124,6 +124,12 @@ function prepare-to-sleep() {
 	else
 		echo "[`date +"${DATE_FORMAT}"`] ${0}: failure to schedule" 1>&2
 	fi
+
+	# unload an kernel module (pt3_drv)
+	if lsmod | grep pt3_drv >/dev/null 2>&1; then
+		rmmod pt3_drv
+	fi
+
 	echo "This system will be stopped soon."
 }
 
@@ -132,6 +138,10 @@ function prepare-to-sleep() {
 function initialize-after-wakeup() {
 	echo 0 > ${WAKEALARM}
 	touch ${TMP_SLEEP}
+
+	# load an kernel module (pt3_drv)
+	modprobe pt3_drv
+
 	echo "This system is waking up from hibernate or suspend now."
 }
 
