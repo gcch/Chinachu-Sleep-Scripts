@@ -30,9 +30,12 @@ Chinachu サーバをスリープさせる際に必要なスクリプトと Chin
 
 
 ## Test environment
-マシンは長らく部屋で放置されていた EPSON Endeavor ST125E (Core 2 Duo P8700, 4GB RAM)。
+テスト環境は次の2台。
 
-そして OS は CentOS 7 (x86-64)。
+* EPSON Endeavor ST125E (Core 2 Duo P8700, 4GB RAM) + KEIAN KTV-FSUSB2/V3 (改)
+* FUJITSU Server PRIMERGY TX1310 M1 (Pentium G3420, 4 GB RAM) + Earth Soft PT3 Rev.A
+
+そして OS はいずれも CentOS 7 (x86-64)。
 
     $ cat /etc/centos-release
     CentOS Linux release 7.1.1503 (Core)
