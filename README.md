@@ -3,7 +3,8 @@
 ## Overview
 Chinachu サーバをスリープさせる際に必要なスクリプトと Chinachu REST API 経由で (一部の必要な) 情報を取得するスクリプト、そしてこれらを導入するためのスクリプトをまとめたもの。
 
-動作はしますが、気になったところをちょこちょこ弄っているので、永遠にβ版かも。
+~~動作はしますが、気になったところをちょこちょこ弄っているので、永遠にβ版かも。~~
+本スクリプトの更新は終了しています。メンテは後継の [Chunachu-Mirakurun-SS](https://github.com/gcch/Chinachu-Mirakurun-SS) のみ継続します。
 
 
 ## Description
